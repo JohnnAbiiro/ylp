@@ -4,8 +4,14 @@ import '../constants/containerconstants.dart';
 import '../constants/imageconstants.dart';
 import '../constants/textconstants.dart';
 import '../constants/iconconstants.dart';
-class CivicSociety extends StatelessWidget {
+class CivicSociety extends StatefulWidget {
   const CivicSociety({super.key});
+
+  @override
+  State<CivicSociety> createState() => _CivicSocietyState();
+}
+
+class _CivicSocietyState extends State<CivicSociety> {
 
   final List<Map<String, String>> _csos = const [
     {

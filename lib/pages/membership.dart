@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/routes.dart';
+import '../provider/routes.dart';
 import 'constants.dart';
 import '../constants/containerconstants.dart';
 import '../constants/imageconstants.dart';

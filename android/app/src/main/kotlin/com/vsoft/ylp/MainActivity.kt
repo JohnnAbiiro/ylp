@@ -1,4 +1,4 @@
-package kologsoft.com.ylp
+package com.vsoft.ylp
 
 import io.flutter.embedding.android.FlutterActivity
 
