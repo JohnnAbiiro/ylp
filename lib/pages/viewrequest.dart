@@ -53,8 +53,8 @@ class Viewrequest extends StatelessWidget {
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
                  SizedBox(height: screenHeight *0.015,),
-                 Text("New Service Connection"),
-                 Text('Requesting a new meter connection ensures your property has the necessary power supply.',
+                 const Text("New Service Connection"),
+                 const Text('Requesting a new meter connection ensures your property has the necessary power supply.',
                    style: TextStyle(fontSize: 12.0),),
                  SizedBox(height: screenHeight *0.01,),
                  const Divider(height: 1.0,thickness: 1, indent: 1,endIndent: 1,color: Colors.black12,),
