@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "383281681009",
+    "firebase_url": "https://ylpapp-66bd6-default-rtdb.firebaseio.com",
+    "project_id": "ylpapp-66bd6",
+    "storage_bucket": "ylpapp-66bd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383281681009:android:1f2af052032a6bd0f9c1d0",
+        "android_client_info": {
+          "package_name": "com.vsoft.ylp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383281681009-v8p6oq0d9rekbkqgir3vgqhtpbkcj37g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyaCHxskmo8-6KYTxVEOIir2wxg5RIMoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383281681009-v8p6oq0d9rekbkqgir3vgqhtpbkcj37g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "383281681009-inncpo7s5a7g57bdiv6h0f0937lv5kkc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ghanayouth.com"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

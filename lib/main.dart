@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:crypto/crypto.dart';
-import 'constants/routes.dart';
+import 'package:ylp/pages/titles.dart';
+import 'package:ylp/provider/routes.dart';
 import 'pages/buttondetails.dart';
-import 'pages/buttonpoll.dart';
-
 import 'pages/cso.dart';
 import 'pages/ghanagovernment.dart';
 import 'pages/upcomingevent.dart';
@@ -40,7 +37,8 @@ void main() async{
   // // SHA-256 hash
   // var sha256Hash = sha256.convert(bytes);
   // print("SHA-256: $sha256Hash");
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (BuildContext context)=>AppProvider(),
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -54,8 +52,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider(create: (BuildContext context)=>AppProvider(),
-      child: Signup()),
+      home: Signup(),
     );
   }
 }
@@ -231,6 +228,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(builder: (context) => ParliamentOfGhana()),
                   );
+                },
+              ),
+
+              ListTile(
+                leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
+                title: const Text(
+                  'Articles',
+                  style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.titles);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings, color: ConstantsIcon.iconWhite,),
+                title: const Text(
+                  "Regions",
+                  style: TextStyle(color: ConstantsTextColor.logintext),
+                ),
+                onTap: (){
+                  Navigator.pushNamed(context, Routes.regions);
                 },
               ),
               const Divider(height: 1.0, thickness: 1.0),
