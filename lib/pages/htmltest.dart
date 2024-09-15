@@ -24,10 +24,9 @@ class _HtmlapiState extends State<Htmlapi> {
   Widget build(BuildContext context) {
     return  Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
-        value.fetchDataArticle();
         return Scaffold(
           appBar: AppBar(
-            title: const Text('HISTORY OF GHANA'),
+            title:  Text(value.articletitle),
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),

@@ -234,11 +234,21 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
                 title: const Text(
-                  'Title',
+                  'Articles',
                   style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
                 ),
                 onTap: () {
                   Navigator.pushNamed(context, Routes.titles);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings, color: ConstantsIcon.iconWhite,),
+                title: const Text(
+                  "Regions",
+                  style: TextStyle(color: ConstantsTextColor.logintext),
+                ),
+                onTap: (){
+                  Navigator.pushNamed(context, Routes.regions);
                 },
               ),
               const Divider(height: 1.0, thickness: 1.0),
