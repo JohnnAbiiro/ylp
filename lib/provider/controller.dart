@@ -5,18 +5,77 @@ import 'package:http/http.dart' as http;
 class AppProvider extends ChangeNotifier{
   static final auth=FirebaseAuth.instance;
   String articleval="";
+  String articletitle="";
   String htmlData = "<p>Loading from controller...</p>";
-  AppProvider(){
-    articleval;
-  }
+  String regionname="";
+  String regioncode="";
 
-  setartitcie(String articale){
+  setregion(String name,String code){
+    regioncode=code;
+    regionname=name;
+    notifyListeners();
+  }
+  setartitcie(String articale,String title){
     print(articale);
     articleval=articale;
+    articletitle=title;
     notifyListeners();
 
   }
 
+  Future<List<dynamic>?> regions()async{
+    try{
+      var url=Uri.parse("https://portal.ylpghanaapp.com/api/v1/regions");
+      var response=await http.get(url,headers: {
+        'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+      });
+      if(response.statusCode==200){
+        var data = jsonDecode(response.body)['data'];
+        if (data is List) {
+          return data;  // Return the data as a List
+        } else {
+          return [];  // Return an empty list if the data is not a List
+        }
+
+      }
+      else
+      {
+        print("Unseccessful");
+        return [{"Error":"Bad Response"}];
+      }
+
+    }catch(e){
+
+    }
+
+  }
+
+  Future<List<dynamic>?> constituencydata()async{
+    try{
+      var url=Uri.parse("https://portal.ylpghanaapp.com/api/v1/constituency?regionCode[eq]=${regioncode}");
+      var response=await http.get(url,headers: {
+        'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+      });
+      if(response.statusCode==200){
+        var data = jsonDecode(response.body)['data'];
+        if (data is List) {
+          return data;  // Return the data as a List
+        } else {
+          return [];  // Return an empty list if the data is not a List
+        }
+
+      }
+      else
+        {
+          print("Unseccessful");
+          return [{"Error":"Bad Response"}];
+        }
+
+    }catch(e){
+
+    }
+
+  }
   Future<List<dynamic>?> fetchData() async {
     try{
       var url = Uri.parse('https://portal.ylpghanaapp.com/api/v1/ylp');
@@ -46,6 +105,7 @@ class AppProvider extends ChangeNotifier{
 
 
   Future<void> fetchDataArticle() async {
+    print(("Yes $articleval"));
 
     var url = Uri.parse('https://portal.ylpghanaapp.com/api/v1/ylp?catID[eq]=${articleval}');
     var response = await http.get(

@@ -64,8 +64,8 @@ class _ApptitleState extends State<Apptitle> {
                   var item = data[index];  // Each item in the list
                   return InkWell(
                     onTap: ()async{
-
-                     await value.setartitcie(item['catID']);
+                      await value.setartitcie(item['catID'],item['title'],);
+                      value.fetchDataArticle();
                       Navigator.pushNamed(context, Routes.html_data);
                     },
                     child: Container(
