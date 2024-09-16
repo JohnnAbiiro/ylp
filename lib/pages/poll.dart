@@ -142,10 +142,10 @@ class _PollState extends State<Poll> {
       builder: (BuildContext context, AppProvider value, Widget? child) {
         value.articles_category();
         return Scaffold(
-          appBar: AppBar(
-            title: Text(Constants.title),
-            centerTitle: true,
-          ),
+          // appBar: AppBar(
+          //   title: Text(Constants.title),
+          //   centerTitle: true,
+          // ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FutureBuilder(
