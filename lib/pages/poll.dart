@@ -142,10 +142,10 @@ class _PollState extends State<Poll> {
       builder: (BuildContext context, AppProvider value, Widget? child) {
         value.articles_category();
         return Scaffold(
-          appBar: AppBar(
-            title: Text(Constants.title),
-            centerTitle: true,
-          ),
+          // appBar: AppBar(
+          //   title: Text(Constants.title),
+          //   centerTitle: true,
+          // ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FutureBuilder(
@@ -197,16 +197,16 @@ class _PollState extends State<Poll> {
      buildMenuContainer(BuildContext context, String title, IconData icon) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PollPage(
-              category: title,
-              questions: questionsWithOptions[title]!,
-              options: optionsForQuestions[title]!,
-            ),
-          ),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => PollPage(
+        //       category: title,
+        //       questions: questionsWithOptions[title]!,
+        //       options: optionsForQuestions[title]!,
+        //     ),
+        //   ),
+        // );
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8.0),
