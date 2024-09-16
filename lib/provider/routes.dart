@@ -1,5 +1,6 @@
 import 'package:ylp/main.dart';
 import 'package:ylp/pages/Signup.dart';
+import 'package:ylp/pages/articles_category.dart';
 import 'package:ylp/pages/constituency.dart';
 import 'package:ylp/pages/createaccount.dart';
 import 'package:ylp/pages/htmltest.dart';
@@ -16,6 +17,7 @@ class Routes{
   static String titles="titles";
   static String regions="regions";
   static String constituency="constituency";
+  static String article_category="article_category";
 
 }
 
@@ -28,4 +30,5 @@ final pages={
   Routes.titles:(context)=> Apptitle(),
   Routes.regions:(context)=> RegionList(),
   Routes.constituency:(context)=> Constituency(),
+  Routes.article_category:(context)=> Article_category(),
 };

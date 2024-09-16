@@ -1,3 +1,4 @@
+import 'package:ylp/pages/regions.dart';
 import 'package:ylp/pages/titles.dart';
 import 'package:ylp/provider/routes.dart';
 import 'pages/buttondetails.dart';
@@ -69,9 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   static final List<Widget> _screenOptions = [
      Poll(),
-     CardDetail(),
-     Dues(),
-     Wallet(),
+     //CardDetail(),
+    // Dues(),
+     RegionList(),
      HomeWidget(),
   ];
 
@@ -298,21 +299,21 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.card_membership),
-            label: 'Card',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payments),
-            label: 'Dues',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.card_membership),
+          //   label: 'Card',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.payments),
+          //   label: 'Dues',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_balance_wallet), // Changed to wallet icon
-            label: 'Wallet',
+            label: 'Regions',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.poll),
-            label: 'Poll',
+            label: 'Events',
           ),
         ],
         currentIndex: _selectedIndex,

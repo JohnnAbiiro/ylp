@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ylp/provider/controller.dart';
+import '../provider/routes.dart';
 import 'constants.dart';
 import 'header.dart';
 import 'containerconstants.dart';
@@ -121,10 +122,10 @@ class _PollState extends State<Poll> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double itemWidth = 200.0;
+    double itemWidth = 400.0;
     int crossAxisCount=0;
     if (screenWidth <= 400) {
-      crossAxisCount = 3;
+      crossAxisCount = 2;
     }
     else if (screenWidth <= 600 && screenWidth<800) {
       crossAxisCount = (screenWidth / 200).floor();
@@ -142,6 +143,7 @@ class _PollState extends State<Poll> {
       builder: (BuildContext context, AppProvider value, Widget? child) {
         value.articles_category();
         return Scaffold(
+
           // appBar: AppBar(
           //   title: Text(Constants.title),
           //   centerTitle: true,
@@ -151,23 +153,31 @@ class _PollState extends State<Poll> {
             child: FutureBuilder(
               future: value.articles_category(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                List<Widget> Items=[];
                 if(snapshot.hasError){
-                  return Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                  return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }
                 if(snapshot.connectionState==ConnectionState.waiting){
-                  return Center(child: Text("Please wait",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
-
+                  return const Center(child: Text("Please wait",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }
                 return GridView.builder(
-                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: crossAxisCount, // Number of items per row
                     crossAxisSpacing: 10.0, // Space between items horizontally
                     mainAxisSpacing: 10.0, // Space between items vertically
                   ),
                   itemCount: snapshot.data.length, // Number of grid items
                   itemBuilder: (context, index) {
-                    return buildCategoryRow(context, snapshot.data[index]['shortName']);
+                      String shortname=snapshot.data[index]['shortName'];
+                      String id=snapshot.data[index]['id'];
+                      return InkWell(
+                        onTap: (){
+                          value.setarticle(id, shortname);
+                          value.getarticle();
+                          Navigator.pushNamed(context, Routes.article_category);
+                          //print(id);
+                        },
+                          child: buildCategoryRow(context, shortname)
+                      );
                   },
                 );
                 //   ListView(
@@ -195,42 +205,27 @@ class _PollState extends State<Poll> {
   }
 
      buildMenuContainer(BuildContext context, String title, IconData icon) {
-    return InkWell(
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => PollPage(
-        //       category: title,
-        //       questions: questionsWithOptions[title]!,
-        //       options: optionsForQuestions[title]!,
-        //     ),
-        //   ),
-        // );
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-        color: ContainerConstants.pollOptionsContainer,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-           const  SizedBox(height: 10.0),
-            Icon(icon, size: 40.0, color: Colors.white),
-           const  SizedBox(height: 10.0),
-            Expanded(
-              child: Text(
-                title,
-                style: const TextStyle(fontSize: 12.0, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+      color: ContainerConstants.pollOptionsContainer,
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+         const  SizedBox(height: 40.0),
+          Icon(icon, size: 40.0, color: Colors.white),
+         const  SizedBox(height: 10.0),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 12.0, color: Colors.white),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 5.0),
-          ],
-        ),
+          ),
+          const SizedBox(height: 5.0),
+        ],
       ),
     );
   }
@@ -240,7 +235,6 @@ class PollPage extends StatefulWidget {
   final String category;
   final List<String> questions;
   final List<List<String>> options;
-
   const PollPage({super.key, required this.category, required this.questions, required this.options});
 
   @override

@@ -31,7 +31,7 @@ class _HtmlapiState extends State<Htmlapi> {
           appBar: AppBar(
             leading: InkWell(
               onTap: (){
-                Navigator.pushNamed(context, Routes.titles);
+                Navigator.pushNamed(context, Routes.article_category);
               },
                 child: Icon(Icons.arrow_back,color: Colors.white,)
             ),
