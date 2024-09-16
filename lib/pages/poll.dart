@@ -215,6 +215,8 @@ class _PollState extends State<Poll> {
         color: ContainerConstants.pollOptionsContainer,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
            const  SizedBox(height: 10.0),
             Icon(icon, size: 40.0, color: Colors.white),
