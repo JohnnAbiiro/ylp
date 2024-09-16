@@ -39,16 +39,20 @@ class _ApptitleState extends State<Apptitle> {
     return Consumer<AppProvider>(builder: (BuildContext context, AppProvider value, Widget? child) {
 
       return Scaffold(
-        appBar: AppBar(title: Text('LIST OF ARTICLES')),
+        appBar: AppBar(
+          leading: Icon(Icons.arrow_back,color: Colors.white,),
+          backgroundColor: Constants.loginTextColor,
+            title: Text('LIST OF ARTICLES',style: TextStyle(color: Colors.white),)
+        ),
         body: FutureBuilder<List<dynamic>?>(
           future: value.fetchData(),  // Call the updated fetchData function
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: Text("Please Wait...",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));//const Center(child: CircularProgressIndicator());  // Show loading spinner
+              return const Center(child: Text("Please Wait...",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));//const Center(child: CircularProgressIndicator());  // Show loading spinner
             } else if (snapshot.hasError) {
               return const Center(child: Text('Check Internet Connection',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold),));
             } else if (!snapshot.hasData || snapshot.data == null || snapshot.data!.isEmpty) {
-              return  Center(child: Text('No data available'));
+              return  const Center(child: Text('No data available',style: TextStyle(fontSize: 30),));
             } else {
               var data = snapshot.data!;  // The fetched list of data
               return GridView.builder(
@@ -64,7 +68,8 @@ class _ApptitleState extends State<Apptitle> {
                   var item = data[index];  // Each item in the list
                   return InkWell(
                     onTap: ()async{
-                      await value.setartitcie(item['catID'],item['title'],);
+                      await value.setarticle(item['catID'],item['title'],);
+                      await value.getarticle();
                       value.fetchDataArticle();
                       Navigator.pushNamed(context, Routes.html_data);
                     },
