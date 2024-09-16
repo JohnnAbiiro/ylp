@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 class AppProvider extends ChangeNotifier{
   static final auth=FirebaseAuth.instance;
   String articleval="";
@@ -9,19 +10,37 @@ class AppProvider extends ChangeNotifier{
   String htmlData = "<p>Loading from controller...</p>";
   String regionname="";
   String regioncode="";
-
-  setregion(String name,String code){
-    regioncode=code;
-    regionname=name;
+  AppProvider(){
+   // getarticle();
+   // getregion();
+  }
+  setregion(String name,String code)async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("regioncode", code);
+    prefs.setString("regionname", name);
     notifyListeners();
   }
-  setartitcie(String articale,String title){
-    print(articale);
-    articleval=articale;
-    articletitle=title;
+  getregion()async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    regioncode=prefs.getString("regioncode")!;
+    regionname=prefs.getString("regionname")!;
     notifyListeners();
+  }
+
+  setarticle(String articale,String title)async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("catid", articale);
+    prefs.setString("articletitle", title);
 
   }
+  getarticle()async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    articleval=prefs.getString("catid")!;
+    articletitle=prefs.getString("articletitle")!;
+    print(articletitle);
+    notifyListeners();
+  }
+
 
   Future<List<dynamic>?> regions()async{
     try{
@@ -31,6 +50,33 @@ class AppProvider extends ChangeNotifier{
       });
       if(response.statusCode==200){
         var data = jsonDecode(response.body)['data'];
+        if (data is List) {
+          return data;  // Return the data as a List
+        } else {
+          return [];  // Return an empty list if the data is not a List
+        }
+
+      }
+      else
+      {
+        print("Unseccessful");
+        return [{"Error":"Bad Response"}];
+      }
+
+    }catch(e){
+
+    }
+
+  }
+  Future<List<dynamic>?> articles_category()async{
+    try{
+      var url=Uri.parse("https://portal.ylpghanaapp.com/api/v1/ylpcat");
+      var response=await http.get(url,headers: {
+        'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+      });
+      if(response.statusCode==200){
+        var data = jsonDecode(response.body)['data'];
+        print(data);
         if (data is List) {
           return data;  // Return the data as a List
         } else {

@@ -68,11 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
   static final List<Widget> _screenOptions = [
+     Poll(),
+     CardDetail(),
+     Dues(),
+     Wallet(),
      HomeWidget(),
-    const CardDetail(),
-    const Dues(),
-    const Wallet(),
-    const Poll(),
   ];
 
   void _onItemTapped(int index) {

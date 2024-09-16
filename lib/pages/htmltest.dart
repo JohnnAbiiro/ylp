@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:http/http.dart'as http;
 import 'package:provider/provider.dart';
+import 'package:ylp/pages/constants.dart';
 import 'package:ylp/provider/controller.dart';
+
+import '../provider/routes.dart';
 class Htmlapi extends StatefulWidget {
   @override
   _HtmlapiState createState() => _HtmlapiState();
@@ -26,7 +29,14 @@ class _HtmlapiState extends State<Htmlapi> {
       builder: (BuildContext context, AppProvider value, Widget? child) {
         return Scaffold(
           appBar: AppBar(
-            title:  Text(value.articletitle),
+            leading: InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, Routes.titles);
+              },
+                child: Icon(Icons.arrow_back,color: Colors.white,)
+            ),
+            backgroundColor: Constants.loginTextColor,
+            title:  Text(value.articletitle,style: TextStyle(color: Colors.white),),
           ),
           body: Padding(
             padding: const EdgeInsets.all(8.0),

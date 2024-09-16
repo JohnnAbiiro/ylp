@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ylp/provider/controller.dart';
 import 'constants.dart';
 import 'header.dart';
 import 'containerconstants.dart';
@@ -118,40 +120,78 @@ class _PollState extends State<Poll> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(Constants.title),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            headerMenu("Poll","Service \n Request", context),
-            buildCategoryRow(context, "Political Parties", "Parliament"),
-            buildCategoryRow(context, "NCC", "Youth Opinion Polls"),
-            buildCategoryRow(context, "Electoral Commission ", "CSOs and Stakeholders"),
-            buildCategoryRow(context, "Online Library", "Online Training Centre"),
-            buildCategoryRow(context, "Upcoming Events", "Ghana Government"),
-          ],
-        ),
-      ),
+    double screenWidth = MediaQuery.of(context).size.width;
+    double itemWidth = 200.0;
+    int crossAxisCount=0;
+    if (screenWidth <= 400) {
+      crossAxisCount = 3;
+    }
+    else if (screenWidth <= 600 && screenWidth<800) {
+      crossAxisCount = (screenWidth / 200).floor();
+    }
+    else if(screenWidth >=600 && screenWidth<1000)
+    {
+      crossAxisCount = (screenWidth / 200).floor();
+
+    }
+    else
+    {
+      crossAxisCount = (screenWidth / itemWidth).floor();
+    }
+    return Consumer<AppProvider>(
+      builder: (BuildContext context, AppProvider value, Widget? child) {
+        value.articles_category();
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(Constants.title),
+            centerTitle: true,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FutureBuilder(
+              future: value.articles_category(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                List<Widget> Items=[];
+                if(snapshot.hasError){
+                  return Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                }
+                if(snapshot.connectionState==ConnectionState.waiting){
+                  return Center(child: Text("Please wait",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+
+                }
+                return GridView.builder(
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount, // Number of items per row
+                    crossAxisSpacing: 10.0, // Space between items horizontally
+                    mainAxisSpacing: 10.0, // Space between items vertically
+                  ),
+                  itemCount: snapshot.data.length, // Number of grid items
+                  itemBuilder: (context, index) {
+                    return buildCategoryRow(context, snapshot.data[index]['shortName']);
+                  },
+                );
+                //   ListView(
+                //   children: Items
+                //   // [
+                //   //   headerMenu("Poll","Service \n Request", context),
+                //   //   buildCategoryRow(context, "Political Parties", "Parliament"),
+                //   //   buildCategoryRow(context, "NCC", "Youth Opinion Polls"),
+                //   //   buildCategoryRow(context, "Electoral Commission ", "CSOs and Stakeholders"),
+                //   //   buildCategoryRow(context, "Online Library", "Online Training Centre"),
+                //   //   buildCategoryRow(context, "Upcoming Events", "Ghana Government"),
+                //   // ],
+                // );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 
 
-     buildCategoryRow(BuildContext context, String title1, String title2) {
-    return Row(
-      children: [
-        Expanded(
-          child: buildMenuContainer(context, title1, Icons.account_balance),
-        ),
-       const  SizedBox(width: 8.0),
-        Expanded(
-          child: buildMenuContainer(context, title2, Icons.gavel),
-        ),
-      ],
-    );
+     Widget buildCategoryRow(BuildContext context, String title1) {
+    return  buildMenuContainer(context, title1, Icons.account_balance);
   }
 
      buildMenuContainer(BuildContext context, String title, IconData icon) {
@@ -176,15 +216,17 @@ class _PollState extends State<Poll> {
         ),
         child: Column(
           children: [
-           const  SizedBox(height: 20.0),
+           const  SizedBox(height: 10.0),
             Icon(icon, size: 40.0, color: Colors.white),
            const  SizedBox(height: 10.0),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 12.0, color: Colors.white),
-              textAlign: TextAlign.center,
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 12.0, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 5.0),
           ],
         ),
       ),
