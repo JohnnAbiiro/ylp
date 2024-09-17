@@ -14,111 +14,110 @@ class Poll extends StatefulWidget {
 
 class _PollState extends State<Poll> {
   // Questions for each category
-  Map<String, List<String>> questionsWithOptions = {
-    "Political Parties": [
-      "Do you support the current structure of political parties?",
-      "Do you believe political parties are representative of citizens’ interests?",
-      "How would you rate the accountability of political parties?"
-    ],
-    "Parliament of the Republic of Ghana": [
-      "Are you satisfied with the performance of Parliament?",
-      "Do you feel Parliament is effectively representing your interests?",
-      "What is your opinion on the level of transparency in Parliament?"
-    ],
-    "National Commission of Civic Education": [
-      "Is the National Commission of Civic Education achieving its objectives?",
-      "What is your opinion on the effectiveness of civic education programs?",
-      "Should more resources be allocated to civic education?"
-    ],
-    "Youth Opinion Polls: Governance & Leadership Accountability": [
-      "Do you believe youth have a strong voice in governance?",
-      "Are leaders in Ghana accountable to the youth?",
-      "How would you rate leadership transparency?"
-    ],
-    "Electoral Commission of Ghana": [
-      "Do you trust the Electoral Commission to deliver free and fair elections?",
-      "What improvements would you like to see in the election process?",
-      "How do you perceive the transparency of election results?"
-    ],
-    "CSOs and Stakeholders Partnerships": [
-      "Are Civil Society Organizations (CSOs) making an impact?",
-      "Do you think the partnership between CSOs and the government is effective?",
-      "Should more resources be allocated to CSO activities?"
-    ],
-    "Online Library": [
-      "Do you find the online library resources helpful?",
-      "Should the online library be expanded?",
-      "How often do you use online resources for research?"
-    ],
-    "Online Training Centre": [
-      "Are the training programs on the online training centre effective?",
-      "Would you recommend these training programs to others?",
-      "What improvements would you suggest for the online training centre?"
-    ],
-    "Upcoming Events": [
-      "Are you aware of upcoming governance-related events?",
-      "How likely are you to attend an upcoming event?",
-      "What type of events would you like to see more of?"
-    ],
-    "Ghana Government": [
-      "Are you satisfied with the current government's performance?",
-      "Do you believe the government is transparent in its operations?",
-      "How would you rate the government's response to public concerns?"
-    ],
-  };
-  Map<String, List<List<String>>> optionsForQuestions = {
-    "Political Parties": [
-      ["Yes", "No", "Neutral"],
-      ["Yes", "No", "Neutral"],
-      ["Excellent", "Good", "Poor"]
-    ],
-    "Parliament of the Republic of Ghana": [
-      ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied"],
-      ["Yes", "No", "Sometimes"],
-      ["High", "Medium", "Low"]
-    ],
-    "National Commission of Civic Education": [
-      ["Yes", "No", "Neutral"],
-      ["Effective", "Somewhat Effective", "Ineffective"],
-      ["Yes", "No", "Maybe"]
-    ],
-    "Youth Opinion Polls: Governance & Leadership Accountability": [
-      ["Yes", "No", "Neutral"],
-      ["Yes", "No", "Maybe"],
-      ["High", "Moderate", "Low"]
-    ],
-    "Electoral Commission of Ghana": [
-      ["Yes", "No", "Neutral"],
-      ["More Transparency", "Better Voter Education", "Improved Technology"],
-      ["High", "Medium", "Low"]
-    ],
-    "CSOs and Stakeholders Partnerships": [
-      ["Yes", "No", "Neutral"],
-      ["Very Effective", "Effective", "Ineffective"],
-      ["Yes", "No", "Maybe"]
-    ],
-    "Online Library": [
-      ["Yes", "No", "Sometimes"],
-      ["Yes", "No", "Maybe"],
-      ["Daily", "Weekly", "Monthly", "Rarely"]
-    ],
-    "Online Training Centre": [
-      ["Yes", "No", "Sometimes"],
-      ["Yes", "No", "Maybe"],
-      ["Better Content", "More Courses", "Improved Accessibility"]
-    ],
-    "Upcoming Events": [
-      ["Yes", "No", "Not Sure"],
-      ["Very Likely", "Somewhat Likely", "Unlikely"],
-      ["Workshops", "Conferences", "Webinars"]
-    ],
-    "Ghana Government": [
-      ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied"],
-      ["Yes", "No", "Sometimes"],
-      ["Excellent", "Good", "Average", "Poor"]
-    ],
-  };
-
+  // Map<String, List<String>> questionsWithOptions = {
+  //   "Political Parties": [
+  //     "Do you support the current structure of political parties?",
+  //     "Do you believe political parties are representative of citizens’ interests?",
+  //     "How would you rate the accountability of political parties?"
+  //   ],
+  //   "Parliament of the Republic of Ghana": [
+  //     "Are you satisfied with the performance of Parliament?",
+  //     "Do you feel Parliament is effectively representing your interests?",
+  //     "What is your opinion on the level of transparency in Parliament?"
+  //   ],
+  //   "National Commission of Civic Education": [
+  //     "Is the National Commission of Civic Education achieving its objectives?",
+  //     "What is your opinion on the effectiveness of civic education programs?",
+  //     "Should more resources be allocated to civic education?"
+  //   ],
+  //   "Youth Opinion Polls: Governance & Leadership Accountability": [
+  //     "Do you believe youth have a strong voice in governance?",
+  //     "Are leaders in Ghana accountable to the youth?",
+  //     "How would you rate leadership transparency?"
+  //   ],
+  //   "Electoral Commission of Ghana": [
+  //     "Do you trust the Electoral Commission to deliver free and fair elections?",
+  //     "What improvements would you like to see in the election process?",
+  //     "How do you perceive the transparency of election results?"
+  //   ],
+  //   "CSOs and Stakeholders Partnerships": [
+  //     "Are Civil Society Organizations (CSOs) making an impact?",
+  //     "Do you think the partnership between CSOs and the government is effective?",
+  //     "Should more resources be allocated to CSO activities?"
+  //   ],
+  //   "Online Library": [
+  //     "Do you find the online library resources helpful?",
+  //     "Should the online library be expanded?",
+  //     "How often do you use online resources for research?"
+  //   ],
+  //   "Online Training Centre": [
+  //     "Are the training programs on the online training centre effective?",
+  //     "Would you recommend these training programs to others?",
+  //     "What improvements would you suggest for the online training centre?"
+  //   ],
+  //   "Upcoming Events": [
+  //     "Are you aware of upcoming governance-related events?",
+  //     "How likely are you to attend an upcoming event?",
+  //     "What type of events would you like to see more of?"
+  //   ],
+  //   "Ghana Government": [
+  //     "Are you satisfied with the current government's performance?",
+  //     "Do you believe the government is transparent in its operations?",
+  //     "How would you rate the government's response to public concerns?"
+  //   ],
+  // };
+  // Map<String, List<List<String>>> optionsForQuestions = {
+  //   "Political Parties": [
+  //     ["Yes", "No", "Neutral"],
+  //     ["Yes", "No", "Neutral"],
+  //     ["Excellent", "Good", "Poor"]
+  //   ],
+  //   "Parliament of the Republic of Ghana": [
+  //     ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied"],
+  //     ["Yes", "No", "Sometimes"],
+  //     ["High", "Medium", "Low"]
+  //   ],
+  //   "National Commission of Civic Education": [
+  //     ["Yes", "No", "Neutral"],
+  //     ["Effective", "Somewhat Effective", "Ineffective"],
+  //     ["Yes", "No", "Maybe"]
+  //   ],
+  //   "Youth Opinion Polls: Governance & Leadership Accountability": [
+  //     ["Yes", "No", "Neutral"],
+  //     ["Yes", "No", "Maybe"],
+  //     ["High", "Moderate", "Low"]
+  //   ],
+  //   "Electoral Commission of Ghana": [
+  //     ["Yes", "No", "Neutral"],
+  //     ["More Transparency", "Better Voter Education", "Improved Technology"],
+  //     ["High", "Medium", "Low"]
+  //   ],
+  //   "CSOs and Stakeholders Partnerships": [
+  //     ["Yes", "No", "Neutral"],
+  //     ["Very Effective", "Effective", "Ineffective"],
+  //     ["Yes", "No", "Maybe"]
+  //   ],
+  //   "Online Library": [
+  //     ["Yes", "No", "Sometimes"],
+  //     ["Yes", "No", "Maybe"],
+  //     ["Daily", "Weekly", "Monthly", "Rarely"]
+  //   ],
+  //   "Online Training Centre": [
+  //     ["Yes", "No", "Sometimes"],
+  //     ["Yes", "No", "Maybe"],
+  //     ["Better Content", "More Courses", "Improved Accessibility"]
+  //   ],
+  //   "Upcoming Events": [
+  //     ["Yes", "No", "Not Sure"],
+  //     ["Very Likely", "Somewhat Likely", "Unlikely"],
+  //     ["Workshops", "Conferences", "Webinars"]
+  //   ],
+  //   "Ghana Government": [
+  //     ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied"],
+  //     ["Yes", "No", "Sometimes"],
+  //     ["Excellent", "Good", "Average", "Poor"]
+  //   ],
+  // };
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -128,12 +127,11 @@ class _PollState extends State<Poll> {
       crossAxisCount = 2;
     }
     else if (screenWidth <= 600 && screenWidth<800) {
-      crossAxisCount = (screenWidth / 200).floor();
+      crossAxisCount = (screenWidth/200).floor();
     }
     else if(screenWidth >=600 && screenWidth<1000)
     {
-      crossAxisCount = (screenWidth / 200).floor();
-
+      crossAxisCount = (screenWidth/200).floor();
     }
     else
     {
@@ -144,9 +142,7 @@ class _PollState extends State<Poll> {
         if(value.auth==null){
           value.logout(context);
         }
-
         return Scaffold(
-
           // appBar: AppBar(
           //   title: Text(Constants.title),
           //   centerTitle: true,
@@ -154,14 +150,17 @@ class _PollState extends State<Poll> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FutureBuilder(
+              initialData: [{}],
               future: value.articles_category(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-
                 if(snapshot.hasError){
                   return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }
                 if(snapshot.connectionState==ConnectionState.waiting){
                   return const Center(child: Text("Please wait",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                }
+                if(!snapshot.hasData){
+                  return const Center(child: Text("Waiting for data!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }
                 return GridView.builder(
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
@@ -171,8 +170,8 @@ class _PollState extends State<Poll> {
                   ),
                   itemCount: snapshot.data.length, // Number of grid items
                   itemBuilder: (context, index) {
-                      String shortname=snapshot.data[index]['shortName'];
-                      String id=snapshot.data[index]['id'];
+                      String shortname=snapshot.data[index]['shortName']??"No Shortname";
+                      String id=snapshot.data[index]['id']??"No ID";
                       return InkWell(
                         onTap: (){
                           value.setarticle(id, shortname);

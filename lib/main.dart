@@ -142,25 +142,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.how_to_vote, color: ConstantsIcon.iconWhite),
-                  //   title: const Text('Political Parties',
-                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                  //   onTap: () {
-                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=> const Politicalparty()
-                  //     ),
-                  //     );
-                  //   },
-                  // ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
-                  //   title: const Text('Organizations',
-                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                  //   onTap: () {
-                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=>const Detailbutton()),
-                  //     );
-                  //   },
-                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.how_to_vote, color: ConstantsIcon.iconWhite),
+                    title: const Text('Political Parties',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> const Politicalparty()
+                      ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
+                    title: const Text('Organizations',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>const Detailbutton()),
+                      );
+                    },
+                  ),
                   ListTile(
                     leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
                     title: const Text('Youth Opinion Polls',
@@ -170,16 +170,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.groups, color: ConstantsIcon.iconWhite),
-                  //   title: const Text("CSO's and Stakeholders",
-                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                  //   onTap: () {
-                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=> CivicSociety()
-                  //     ),
-                  //     );
-                  //   },
-                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.groups, color: ConstantsIcon.iconWhite),
+                    title: const Text("CSO's and Stakeholders",
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=> CivicSociety()
+                      ),
+                      );
+                    },
+                  ),
                   ListTile(
                     leading: const Icon(Icons.library_books, color: ConstantsIcon.iconWhite),
                     title: const Text('Online Library',
@@ -200,84 +200,84 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.event, color: ConstantsIcon.iconWhite),
-                  //   title: const Text('Upcoming Events',
-                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                  //   onTap: () {
-                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=>UpcomingEvent()
-                  //     ),
-                  //     );
-                  //   },
-                  // ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.public, color: ConstantsIcon.iconWhite),
-                  //   title: const Text('Ghana Government',
-                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                  //   onTap: () {
-                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=>const GovernmentOfGhana()
-                  //     ),
-                  //     );
-                  //   },
-                  // ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
-                  //   title: const Text(
-                  //     'Parliament of Ghana',
-                  //     style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
-                  //   ),
-                  //   onTap: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(builder: (context) => ParliamentOfGhana()),
-                  //     );
-                  //   },
-                  // ),
-
-                  // ListTile(
-                  //   leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
-                  //   title: const Text(
-                  //     'Articles',
-                  //     style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
-                  //   ),
-                  //   onTap: () {
-                  //     Navigator.pushNamed(context, Routes.titles);
-                  //   },
-                  // ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.settings, color: ConstantsIcon.iconWhite,),
-                  //   title: const Text(
-                  //     "Regions",
-                  //     style: TextStyle(color: ConstantsTextColor.logintext),
-                  //   ),
-                  //   onTap: (){
-                  //     Navigator.pushNamed(context, Routes.regions);
-                  //   },
-                  // ),
-                  const Divider(height: 1.0, thickness: 1.0),
-                  InkWell(
-                    onTap: (){
-                      value.logout(context);
+                  ListTile(
+                    leading: const Icon(Icons.event, color: ConstantsIcon.iconWhite),
+                    title: const Text('Upcoming Events',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>UpcomingEvent()
+                      ),
+                      );
                     },
-                    child: ListTile(
-
-                      leading: const Icon(Icons.logout, color: ConstantsIcon.iconWhite),
-                      title: const Text('Logout',
-                          style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-
-                    ),
                   ),
-                  // ListTile(
-                  //   leading: const Icon(Icons.person_add, color: ConstantsIcon.iconWhite),
-                  //   title: const Text('Sign up',
-                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                  //   onTap: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(builder: (context) => const Signup()),
-                  //     );
-                  //   },
-                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.public, color: ConstantsIcon.iconWhite),
+                    title: const Text('Ghana Government',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>const GovernmentOfGhana()
+                      ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
+                    title: const Text(
+                      'Parliament of Ghana',
+                      style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ParliamentOfGhana()),
+                      );
+                    },
+                  ),
+
+                  ListTile(
+                    leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
+                    title: const Text(
+                      'Articles',
+                      style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.titles);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.settings, color: ConstantsIcon.iconWhite,),
+                    title: const Text(
+                      "Regions",
+                      style: TextStyle(color: ConstantsTextColor.logintext),
+                    ),
+                    onTap: (){
+                      Navigator.pushNamed(context, Routes.regions);
+                    },
+                  ),
+                  const Divider(height: 1.0, thickness: 1.0),
+                  ListTile(
+                    leading: const Icon(Icons.logout, color: ConstantsIcon.iconWhite),
+                    title: const Text('Logout',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      AppProvider().logout;
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => Logout()),
+                      // );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.person_add, color: ConstantsIcon.iconWhite),
+                    title: const Text('Sign up',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Signup()),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
