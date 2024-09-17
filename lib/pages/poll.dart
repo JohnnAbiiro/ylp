@@ -150,7 +150,6 @@ class _PollState extends State<Poll> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: FutureBuilder(
-              initialData: [{}],
               future: value.articles_category(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if(snapshot.hasError){

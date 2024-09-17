@@ -118,6 +118,7 @@ class AppProvider extends ChangeNotifier{
       }
 
     }catch(e){
+      print(e);
 
     }
 
