@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ylp/constants/containerconstants.dart';
 import 'package:ylp/provider/controller.dart';
 
+import '../provider/routes.dart';
 import 'constants.dart';
 
 class Constituency extends StatelessWidget {
@@ -9,11 +11,36 @@ class Constituency extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double itemWidth = 400.0;
+    int crossAxisCount=0;
+    if (screenWidth <= 400) {
+      crossAxisCount = 2;
+    }
+    else if (screenWidth <= 600 && screenWidth<800) {
+      crossAxisCount = (screenWidth / 200).floor();
+    }
+    else if(screenWidth >=600 && screenWidth<1000)
+    {
+      crossAxisCount = (screenWidth / 200).floor();
+
+    }
+    else
+    {
+      crossAxisCount = (screenWidth / itemWidth).floor();
+    }
     return Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
+        if(value.auth.currentUser==null){
+          value.logout(context);
+        }
         return Scaffold(
           appBar: AppBar(
-            title: Text(value.regionname),
+            backgroundColor: ContainerConstants.appBarColor,
+            leading: InkWell(onTap:(){
+              Navigator.pushNamed(context, Routes.regions);
+            },child: Icon(Icons.arrow_back,color: Colors.white,)),
+            title: Text(value.regionname,style: TextStyle(color: Colors.white),),
             centerTitle: true,
           ),
           body: Padding(
@@ -31,8 +58,8 @@ class Constituency extends StatelessWidget {
                     return Text("Please Wait");
                   }
                   return  GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount:crossAxisCount ,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                         childAspectRatio: 1.0,
@@ -42,6 +69,9 @@ class Constituency extends StatelessWidget {
                         var data=snapshot.data![index];
                         var name=data['constituencyName'];
                         var code=data['constituencyCode'];
+                        var pscount=data['pollstCount'];
+                        print(snapshot);
+
                         return InkWell(
                           onTap: (){
                             //Navigator.pushNamed(context, routeName)
@@ -82,7 +112,7 @@ class Constituency extends StatelessWidget {
                                         children: [
                                           Text("#PS:", style: TextStyle(color: Colors.white, fontSize: 18),),
                                           SizedBox(width: 6),
-                                          Text(code, style: TextStyle(color: Colors.white, fontSize: 18),),
+                                          Text("$pscount", style: TextStyle(color: Colors.white, fontSize: 18),),
                                         ],
                                       )
                                     ],

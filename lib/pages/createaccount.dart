@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ylp/provider/routes.dart';
 import 'Signup.dart';
 import '../provider/controller.dart';
 
@@ -366,9 +368,12 @@ class _CreateAccountState extends State<CreateAccount> {
                                   try{
                                     final progress=ProgressHUD.of(context);
                                     progress!.show();
+                                    final auth=FirebaseAuth.instance;
+                                    await auth.createUserWithEmailAndPassword(email: txt_email, password: txt_password);
                                     //  await AppProvider.auth.createUserWithEmailAndPassword(email: txt_email, password: "password");
                                     await FirebaseFirestore.instance.collection('users').doc(txt_email).set(user.toMap());//add(user.toMap());
                                     progress!.dismiss();
+                                    Navigator.pushNamed(context, Routes.membership);
                                   }catch(e){
                                     print(e);
                                   }
