@@ -141,7 +141,10 @@ class _PollState extends State<Poll> {
     }
     return Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
-        value.articles_category();
+        if(value.auth==null){
+          value.logout(context);
+        }
+
         return Scaffold(
 
           // appBar: AppBar(
@@ -153,6 +156,7 @@ class _PollState extends State<Poll> {
             child: FutureBuilder(
               future: value.articles_category(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+
                 if(snapshot.hasError){
                   return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }

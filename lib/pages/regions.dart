@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ylp/constants/containerconstants.dart';
 import 'package:ylp/provider/controller.dart';
 
 import '../provider/routes.dart';
@@ -10,11 +11,36 @@ class RegionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double itemWidth = 400.0;
+    int crossAxisCount=0;
+    if (screenWidth <= 400) {
+      crossAxisCount = 2;
+    }
+    else if (screenWidth <= 600 && screenWidth<800) {
+      crossAxisCount = (screenWidth / 200).floor();
+    }
+    else if(screenWidth >=600 && screenWidth<1000)
+    {
+      crossAxisCount = (screenWidth / 200).floor();
+
+    }
+    else
+    {
+      crossAxisCount = (screenWidth / itemWidth).floor();
+    }
     return Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
+        if(value.auth.currentUser==null){
+          value.logout(context);
+        }
         return Scaffold(
           appBar: AppBar(
-            title: Text("Regions"),
+            backgroundColor: ContainerConstants.appBarColor,
+            leading: InkWell(onTap:(){
+              Navigator.pushNamed(context, Routes.dashboard);
+            },child: Icon(Icons.arrow_back,color: Colors.white,)),
+            title: Text("Regions",style: TextStyle(color: Colors.white),),
             centerTitle: true,
           ),
           body: Padding(
@@ -29,11 +55,11 @@ class RegionList extends StatelessWidget {
                     return Text("Error: ${snapshot.error}");
                   }
                   else if(snapshot.connectionState==ConnectionState.waiting){
-                    return Text("Please Wait");
+                    return const Text("Please Wait");
                   }
                   return  GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: crossAxisCount,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                         childAspectRatio: 1.0,
@@ -43,9 +69,12 @@ class RegionList extends StatelessWidget {
                         var data=snapshot.data![index];
                         String regionname=data['regionName'];
                         String code=data['regionCode'];
+                        String regcount=data['constCount'].toString();
+
                         return InkWell(
                           onTap: ()async{
                             value.setregion(regionname, code);
+                            value.getregion();
                             Navigator.pushNamed(context, Routes.constituency);
                           },
                           child: Container(
@@ -82,9 +111,9 @@ class RegionList extends StatelessWidget {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text("Constituency:", style: TextStyle(color: Colors.white, fontSize: 18),),
+                                          Text("#Constituency:", style: TextStyle(color: Colors.white, fontSize: 11),),
                                           SizedBox(width: 6),
-                                          Text(code, style: TextStyle(color: Colors.white, fontSize: 18),),
+                                          Text(regcount, style: TextStyle(color: Colors.white, fontSize: 12),),
                                         ],
                                       )
                                     ],

@@ -51,6 +51,9 @@ class _Article_categoryState extends State<Article_category> {
 
     return Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
+        if(value.auth==null){
+          value.logout(context);
+        }
         return Scaffold(
           appBar: AppBar(
             leading: InkWell(onTap:(){
@@ -136,14 +139,14 @@ class _Article_categoryState extends State<Article_category> {
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.all(16.0),
                                   title: Text(title, style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600)),
-                                  subtitle: Column(
+                                  subtitle: const Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const SizedBox(height: 8.0),
+                                      SizedBox(height: 8.0),
                                       Text("Short Description"),
-                                      const SizedBox(height: 8.0),
-                                      Text('Date: 19/01/2020',style: const TextStyle(fontSize: 12.0),),
-                                      Text('Location: "location"',style: const TextStyle(fontSize: 12.0),),
+                                      SizedBox(height: 8.0),
+                                      Text('Date: 19/01/2020',style: TextStyle(fontSize: 12.0),),
+                                      Text('Location: "location"',style: TextStyle(fontSize: 12.0),),
                                     ],
                                   ),
                                   trailing: const Icon(Icons.event),
@@ -151,7 +154,7 @@ class _Article_categoryState extends State<Article_category> {
                                     value.setarticle(value.articleval, title);
                                     value.setarticle_specifi(id);
                                     value.getarticle();
-                                    value.fetchDataArticle_specific();
+                                   // value.fetchDataArticle_specific();
                                     Navigator.pushNamed(context, Routes.html_data);
 
 

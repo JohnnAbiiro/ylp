@@ -86,240 +86,246 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double wp800 = 800 / screenWidth;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          Constants.title,
-          style: const TextStyle(color: ConstantsTextColor.logintext, fontSize: 14.0),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: ConstantsIcon.iconWhite,
-        ),
-        backgroundColor: ContainerConstants.appBarColor,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: ConstantsIcon.iconWhite),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Logout()),
-              );
-            },
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: Container(
-          color: ContainerConstants.appBarColor,
-          child: ListView(
-            children: [
-              DrawerHeader(
-                decoration: const BoxDecoration(
-                  color: ContainerConstants.appBarColor,
-                ),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                        icon: const Icon(Icons.close, color: ConstantsIcon.iconWhite),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      leading: const Icon(Icons.home, color: ConstantsIcon.iconWhite),
-                      title: const Text('Home',
-                          style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.how_to_vote, color: ConstantsIcon.iconWhite),
-                title: const Text('Political Parties',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=> const Politicalparty()
-                  ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
-                title: const Text('Organizations',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>const Detailbutton()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
-                title: const Text('Youth Opinion Polls',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>Poll()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.groups, color: ConstantsIcon.iconWhite),
-                title: const Text("CSO's and Stakeholders",
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=> CivicSociety()
-                   ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.library_books, color: ConstantsIcon.iconWhite),
-                title: const Text('Online Library',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>OnlineLibrary(),
-                   ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.school, color: ConstantsIcon.iconWhite),
-                title: const Text('Online Training Centre',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>OnlineTraining()
-                  ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.event, color: ConstantsIcon.iconWhite),
-                title: const Text('Upcoming Events',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>UpcomingEvent()
-                   ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.public, color: ConstantsIcon.iconWhite),
-                title: const Text('Ghana Government',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context)=>const GovernmentOfGhana()
-                   ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
-                title: const Text(
-                  'Parliament of Ghana',
-                  style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ParliamentOfGhana()),
-                  );
-                },
-              ),
-
-              ListTile(
-                leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
-                title: const Text(
-                  'Articles',
-                  style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.titles);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings, color: ConstantsIcon.iconWhite,),
-                title: const Text(
-                  "Regions",
-                  style: TextStyle(color: ConstantsTextColor.logintext),
-                ),
-                onTap: (){
-                  Navigator.pushNamed(context, Routes.regions);
-                },
-              ),
-              const Divider(height: 1.0, thickness: 1.0),
-              ListTile(
-                leading: const Icon(Icons.logout, color: ConstantsIcon.iconWhite),
-                title: const Text('Logout',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Logout()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.person_add, color: ConstantsIcon.iconWhite),
-                title: const Text('Sign up',
-                    style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Signup()),
-                  );
+    return Consumer<AppProvider>(
+      builder: (BuildContext context, AppProvider value, Widget? child) {
+        if(value.auth.currentUser==null){
+          value.logout(context);
+        }
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              Constants.title,
+              style: const TextStyle(color: ConstantsTextColor.logintext, fontSize: 14.0),
+            ),
+            centerTitle: true,
+            iconTheme: const IconThemeData(
+              color: ConstantsIcon.iconWhite,
+            ),
+            backgroundColor: ContainerConstants.appBarColor,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.notifications, color: ConstantsIcon.iconWhite),
+                onPressed: () {
+                  value.logout(context);
                 },
               ),
             ],
           ),
-        ),
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints:  BoxConstraints(maxWidth: screenWidth * wp800),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          drawer: Drawer(
             child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: ConstantsIcon.iconWhite),
-              child: _screenOptions.elementAt(_selectedIndex),
+              color: ContainerConstants.appBarColor,
+              child: ListView(
+                children: [
+                  DrawerHeader(
+                    decoration: const BoxDecoration(
+                      color: ContainerConstants.appBarColor,
+                    ),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: const Icon(Icons.close, color: ConstantsIcon.iconWhite),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          leading: const Icon(Icons.home, color: ConstantsIcon.iconWhite),
+                          title: const Text('Home',
+                              style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.how_to_vote, color: ConstantsIcon.iconWhite),
+                  //   title: const Text('Political Parties',
+                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                  //   onTap: () {
+                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=> const Politicalparty()
+                  //     ),
+                  //     );
+                  //   },
+                  // ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
+                  //   title: const Text('Organizations',
+                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                  //   onTap: () {
+                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=>const Detailbutton()),
+                  //     );
+                  //   },
+                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
+                    title: const Text('Youth Opinion Polls',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>Poll()),
+                      );
+                    },
+                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.groups, color: ConstantsIcon.iconWhite),
+                  //   title: const Text("CSO's and Stakeholders",
+                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                  //   onTap: () {
+                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=> CivicSociety()
+                  //     ),
+                  //     );
+                  //   },
+                  // ),
+                  ListTile(
+                    leading: const Icon(Icons.library_books, color: ConstantsIcon.iconWhite),
+                    title: const Text('Online Library',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>OnlineLibrary(),
+                      ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.school, color: ConstantsIcon.iconWhite),
+                    title: const Text('Online Training Centre',
+                        style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                    onTap: () {
+                      Navigator.push(context,MaterialPageRoute(builder: (context)=>OnlineTraining()
+                      ),
+                      );
+                    },
+                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.event, color: ConstantsIcon.iconWhite),
+                  //   title: const Text('Upcoming Events',
+                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                  //   onTap: () {
+                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=>UpcomingEvent()
+                  //     ),
+                  //     );
+                  //   },
+                  // ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.public, color: ConstantsIcon.iconWhite),
+                  //   title: const Text('Ghana Government',
+                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                  //   onTap: () {
+                  //     Navigator.push(context,MaterialPageRoute(builder: (context)=>const GovernmentOfGhana()
+                  //     ),
+                  //     );
+                  //   },
+                  // ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
+                  //   title: const Text(
+                  //     'Parliament of Ghana',
+                  //     style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) => ParliamentOfGhana()),
+                  //     );
+                  //   },
+                  // ),
+
+                  // ListTile(
+                  //   leading: const Icon(Icons.account_balance, color: ConstantsIcon.iconWhite),
+                  //   title: const Text(
+                  //     'Articles',
+                  //     style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+                  //   ),
+                  //   onTap: () {
+                  //     Navigator.pushNamed(context, Routes.titles);
+                  //   },
+                  // ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.settings, color: ConstantsIcon.iconWhite,),
+                  //   title: const Text(
+                  //     "Regions",
+                  //     style: TextStyle(color: ConstantsTextColor.logintext),
+                  //   ),
+                  //   onTap: (){
+                  //     Navigator.pushNamed(context, Routes.regions);
+                  //   },
+                  // ),
+                  const Divider(height: 1.0, thickness: 1.0),
+                  InkWell(
+                    onTap: (){
+                      value.logout(context);
+                    },
+                    child: ListTile(
+
+                      leading: const Icon(Icons.logout, color: ConstantsIcon.iconWhite),
+                      title: const Text('Logout',
+                          style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+
+                    ),
+                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.person_add, color: ConstantsIcon.iconWhite),
+                  //   title: const Text('Sign up',
+                  //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) => const Signup()),
+                  //     );
+                  //   },
+                  // ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+          body: Center(
+            child: ConstrainedBox(
+              constraints:  BoxConstraints(maxWidth: screenWidth * wp800),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10), color: ConstantsIcon.iconWhite),
+                  child: _screenOptions.elementAt(_selectedIndex),
+                ),
+              ),
+            ),
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.card_membership),
-          //   label: 'Card',
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.payments),
-          //   label: 'Dues',
-          // ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance_wallet), // Changed to wallet icon
-            label: 'Regions',
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.card_membership),
+              //   label: 'Card',
+              // ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.payments),
+              //   label: 'Dues',
+              // ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_balance_wallet), // Changed to wallet icon
+                label: 'Regions',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.poll),
+                label: 'Events',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: ContainerConstants.bottomNavSelected,
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.poll),
-            label: 'Events',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: ContainerConstants.bottomNavSelected,
-        onTap: _onItemTapped,
-      ),
+        );
+      },
+
     );
   }
 }
