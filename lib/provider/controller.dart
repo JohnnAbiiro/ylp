@@ -19,16 +19,6 @@ class AppProvider extends ChangeNotifier{
   String usertype="";
   bool logout_status=false;
   AppProvider(){
-    if(auth.currentUser==null){
-      print("logout");
-      logout_status=true;
-      notifyListeners();
-      //logout(context);
-    }
-    else
-      {
-        print("Login as ${auth.currentUser!.email}");
-      }
     getarticle();
     getregion();
     getuserdata();
@@ -68,8 +58,8 @@ class AppProvider extends ChangeNotifier{
   }
   getuserdata()async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    userphone=prefs.getString("phone")!;
-    usertype=prefs.getString("usertype")!;
+    userphone=prefs.getString("phone")??"no phone";
+    usertype=prefs.getString("usertype")??"no usertype"!;
     notifyListeners();
 
   }
@@ -128,6 +118,7 @@ class AppProvider extends ChangeNotifier{
       }
 
     }catch(e){
+      print(e);
 
     }
 
