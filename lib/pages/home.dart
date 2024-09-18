@@ -1,605 +1,275 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:ylp/provider/controller.dart';
-import 'header.dart';
-import 'constants.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import '../constants/containerconstants.dart';
 import '../constants/imageconstants.dart';
-import '../constants/textconstants.dart';
-import '../constants/iconconstants.dart';
-class HomeWidget extends StatefulWidget {
-  @override
-  State<HomeWidget> createState() => _HomeWidgetState();
-}
-class _HomeWidgetState extends State<HomeWidget> {
-  final List<String> _items = [Constants.quickAccess];
-  final List<String> _items2 = [Constants.recentTransactions];
-  String? _selectedItem;
-  String? _selectedItem2;
-  bool _showContainers = false;
-  bool _showContainers2 = false;
+
+class LandingPage extends StatelessWidget {
+  final List<String> carouselImages = [
+    ConstantsImage.bg1,
+    ConstantsImage.background,
+    ConstantsImage.bg2,
+    ConstantsImage.bg3,
+  ];
 
   @override
   Widget build(BuildContext context) {
-    double sized = MediaQuery.of(context).size.width;
-    //double screenWidth = MediaQuery.of(context).size.width;
-   // double screenHeight = MediaQuery.of(context).size.height;
-    return Consumer<AppProvider>(
-      builder: (BuildContext context, AppProvider value, Widget? child) {
-        if(value.auth.currentUser==null){
-          value.logout(context);
-        }
-        return SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              headerMenu("Home","Service \n Request", context),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: ContainerConstants.loginContainer,
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 60,
-                              child: Image.asset(ConstantsImage.postpaidBillImage),
-                            ),
-                            const SizedBox(width: 2.0),
-                            const Column(
-                              children: [
-                                SizedBox(height: 20.0),
-                                //  Text(Constants.postpaidBillTitle, style: TextStyle(fontSize: 10.0, color: ConstantsTextColor.loginColor)),
-                                //Text(Constants.postpaidBillSubtitle, style: TextStyle(color: ConstantsTextColor.loginColor)),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Image carousel
+            CarouselSlider(
+              options: CarouselOptions(
                 height: 300,
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return [
-                      Container(
-                        padding: const EdgeInsets.all(2.0),
-                        color: ContainerConstants.transparent1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: Text(Constants.title),
-                              subtitle: Text(
-                                DateFormat.yMMMMEEEEd().add_jm().format(DateTime.now()),
-                              ),
-                              leading: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: Image.asset(ConstantsImage.youthImage),
-                              ),
-                            ),
-                            const Center(child: Text(Constants.happyFoundersDay,style: TextStyle(fontSize: 12.0),)),
-                            LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Container(
-                                  width: constraints.maxWidth,  // Match width to the ListTile
-                                  color: ContainerConstants.transparent1,
-                                  child: Image.asset(
-                                    ConstantsImage.appsImage,
-                                    fit: BoxFit.cover, // Optional: Control how the image scales
-                                  ),
-                                );
-                              },
-                            ),
-                            const Text(
-                              Constants.readMore,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
+                autoPlay: true,
+                viewportFraction: 1.0,
+                enlargeCenterPage: false,
+              ),
+              items: carouselImages.map((imagePath) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Stack(
+                      children: [
+                        Image.asset(
+                          imagePath,
+                          width: screenWidth,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                      const SizedBox(height: 5.0,),
-                      Container(
-                        padding: const EdgeInsets.all(2.0),
-                        color: ContainerConstants.transparent1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: Text(Constants.title),
-                              subtitle: Text(
-                                DateFormat.yMMMMEEEEd().add_jm().format(DateTime.now()),
+                        Positioned(
+                          top: 100,
+                          left: 20,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              leading: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: Image.asset(ConstantsImage.youthImage),
-                              ),
-                            ),
-                            const Center(child: Text(Constants.happyFoundersDay,style: TextStyle(fontSize: 12.0),)),
-                            LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Container(
-                                  width: constraints.maxWidth,
-                                  color: ContainerConstants.transparent1,
-                                  child: Image.asset(
-                                    ConstantsImage.appsImage,
-                                    fit: BoxFit.cover, // Optional: Control how the image scales
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Welcome to Youth Parliament!",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                );
-                              },
-                            ),
-                            const Text(
-                              Constants.readMore,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5.0,),
-                      Container(
-                        padding: const EdgeInsets.all(2.0),
-                        color: ContainerConstants.transparent1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: Text(Constants.title),
-                              subtitle: Text(
-                                DateFormat.yMMMMEEEEd().add_jm().format(DateTime.now()),
-                              ),
-                              leading: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: Image.asset(ConstantsImage.youthImage),
-                              ),
-                            ),
-                            const Center(child: Text(Constants.happyFoundersDay,style: TextStyle(fontSize: 12.0),)),
-                            LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Container(
-                                  width: constraints.maxWidth,  // Match width to the ListTile
-                                  color: ContainerConstants.transparent1,
-                                  child: Image.asset(
-                                    ConstantsImage.appsImage,
-                                    fit: BoxFit.cover, // Optional: Control how the image scales
+                                  SizedBox(height: 10),
+                                  Text(
+                                    "Engage. Learn. Lead.",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                );
-                              },
-                            ),
-                            const Text(
-                              Constants.readMore,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5.0,),
-                      Container(
-                        padding: const EdgeInsets.all(2.0),
-                        color: Colors.transparent,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              title: Text(Constants.title),
-                              subtitle: Text(
-                                DateFormat.yMMMMEEEEd().add_jm().format(DateTime.now()),
-                              ),
-                              leading: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: Image.asset(ConstantsImage.youthImage),
-                              ),
-                            ),
-                            const Center(child: Text(Constants.happyFoundersDay,style: TextStyle(fontSize: 12.0),)),
-                            LayoutBuilder(
-                              builder: (context, constraints) {
-                                return Container(
-                                  width: constraints.maxWidth,  // Match width to the ListTile
-                                  color: ContainerConstants.transparent1,
-                                  child: Image.asset(
-                                    ConstantsImage.appsImage,
-                                    fit: BoxFit.cover, // Optional: Control how the image scales
+                                  SizedBox(height: 10),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      // Navigate to main feature of the app
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: ContainerConstants.appBarColor,
+                                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                    ),
+                                    child: Text("Read More",style: TextStyle(color: Colors.white),),
                                   ),
-                                );
-                              },
+                                ],
+                              ),
                             ),
-                            const Text(
-                              Constants.readMore,
-                              style: TextStyle(fontSize: 18),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ][index];
+                      ],
+                    );
                   },
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: Text(Constants.whatToDo, style: TextStyle(fontSize: 12.0))),
-              ),
+                );
+              }).toList(),
+            ),
 
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: ContainerConstants.dropdownColor,
-                  child: const Center(
-                    child: Text(
-                      Constants.myCustomerAccounts,
-                      style: TextStyle(color: ConstantsTextColor.homeTitleColor),
-                      textAlign: TextAlign.center,
+            SizedBox(height: 10),
+
+            // Introduction or mission statement
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                "Join the movement of empowered youth shaping the future of leadership and politics. "
+                    "Get trained, participate in polls, and voice your opinions on matters that matter!",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+            SizedBox(height: 20),
+
+            // Features section
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       _buildFeatureTile(context, ConstantsImage.book1, "Training"),
+            //       _buildFeatureTile(context, ConstantsImage.book2, "Polls"),
+            //       _buildFeatureTile(context, ConstantsImage.book3, "Leadership"),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(height: 40),
+
+            // Upcoming Events Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Upcoming Events",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                  SizedBox(height: 10),
+                  Container(
+
+                    height: 150,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return _buildEventCard(context, "Event $index", "October 10, 2024");
+                      },
+                    ),
+                  ),
+                ],
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: InkWell(
-              //     onTap: (){},
-              //     child: Container(
-              //       width: double.infinity,
-              //       decoration: const BoxDecoration(
-              //         color: ContainerConstants.dropdownColor,
-              //         borderRadius: BorderRadius.only(
-              //           topRight: Radius.circular(20.0),
-              //         ),
-              //       ),
-              //       child: const Column(
-              //         children: [
-              //           SizedBox(height: 25.0),
-              //           CircleAvatar(
-              //             radius: 30.0,
-              //             backgroundColor: ContainerConstants.addAccountIconBackgroundColor,
-              //             child: Icon(
-              //               Icons.add,
-              //               color: ConstantsIcon.iconWhite,
-              //               size: 30.0,
-              //             ),
-              //           ),
-              //           Text(Constants.addWaterAccount, textAlign: TextAlign.center),
-              //           SizedBox(height: 8.0,),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: InkWell(
-              //     onTap: (){},
-              //     child: Container(
-              //       width: double.infinity,
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(3.0),
-              //         color: ContainerConstants.waterBillButtonColor,
-              //       ),
-              //       child: const Padding(
-              //         padding: EdgeInsets.all(8.0),
-              //         child: Text(Constants.payWaterBill, style: TextStyle(color: ConstantsIcon.iconWhite), textAlign: TextAlign.center),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              //
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Container(
-              //     color: ContainerConstants.transparent1,
-              //     child: Column(
-              //       children: [
-              //         Padding(
-              //           padding: const EdgeInsets.symmetric(horizontal:8.0),
-              //           child: Container(
-              //             width: double.infinity,
-              //             decoration: BoxDecoration(
-              //               color: ContainerConstants.dropdownColor,
-              //               borderRadius: BorderRadius.circular(4.0),
-              //             ),
-              //             child: DropdownButtonHideUnderline(
-              //               child: DropdownButton<String>(
-              //                 value: _selectedItem,
-              //                 items: _items.map((String item) {
-              //                   return DropdownMenuItem<String>(
-              //                     value: item,
-              //                     child: Padding(
-              //                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              //                       child: Text(item),
-              //                     ),
-              //                   );
-              //                 }).toList(),
-              //                 onChanged: (String? newValue) {
-              //                   setState(() {
-              //                     if (_selectedItem == newValue) {
-              //                       _showContainers = !_showContainers;
-              //                     } else {
-              //                       _selectedItem = newValue!;
-              //                       _showContainers = true;
-              //                     }
-              //                   });
-              //                 },
-              //                 dropdownColor: ContainerConstants.dropdownColor,
-              //                 iconEnabledColor: ConstantsIcon.iconColor,
-              //                 icon: _showContainers
-              //                     ? const Icon(Icons.arrow_drop_up)
-              //                     : const Icon(Icons.arrow_drop_down),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //         SizedBox(height: sized * 0.02),
-              //         if (_showContainers) ...[
-              //           Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: Row(
-              //               children: [
-              //                 Expanded(
-              //                   child: InkWell(
-              //                     onTap: (){},
-              //                     child: Container(
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: BorderRadius.circular(10.0),
-              //                         color: ContainerConstants.containerBackgroundColor,
-              //                       ),
-              //                       child: const Column(
-              //                         children: [
-              //                           InkWell(
-              //                             child: Column(
-              //                               children: [
-              //                                 SizedBox(height: 20.0),
-              //                                 Icon(Icons.account_circle_outlined, size: 30.0),
-              //                                 Text(Constants.myAccount,style: TextStyle(fontSize: 12.0),),
-              //                                 Text(Constants.editPersonalDetails,
-              //                                   style: TextStyle(fontSize: 10.0),
-              //                                 ),
-              //                                 SizedBox(height: 20.0),
-              //                               ],
-              //                             ),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //                 const SizedBox(width: 8.0),
-              //                 Expanded(
-              //                   child: InkWell(
-              //                     onTap: (){},
-              //                     child: Container(
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: BorderRadius.circular(10.0),
-              //                         color: ContainerConstants.containerBackgroundColor,
-              //                       ),
-              //                       child: const Column(
-              //                         children: [
-              //                           InkWell(
-              //                             child: Column(
-              //                               children: [
-              //                                 SizedBox(height: 20.0),
-              //                                 Icon(Icons.list_alt_outlined, size: 30.0),
-              //                                 Text(Constants.eBill,style: TextStyle(fontSize: 12.0),),
-              //                                 Text(
-              //                                   Constants.yourElectronicBill,
-              //                                   style: TextStyle(fontSize: 10.0),
-              //                                 ),
-              //                                 SizedBox(height: 20.0),
-              //                               ],
-              //                             ),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //           const  SizedBox(height:8.0),
-              //           Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: Row(
-              //               children: [
-              //                 Expanded(
-              //                   child: InkWell(
-              //                     onTap: (){},
-              //                     child: Container(
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: BorderRadius.circular(10.0),
-              //                         color: ContainerConstants.containerBackgroundColor,
-              //                       ),
-              //                       child: const Column(
-              //                         children: [
-              //                           InkWell(
-              //                             child: Column(
-              //                               children: [
-              //                                 SizedBox(height: 20.0),
-              //                                 Icon(Icons.payments_outlined, size: 30.0),
-              //                                 Text(Constants.payments,style: TextStyle(fontSize: 12.0),),
-              //                                 Text(
-              //                                   Constants.checkYourPayments,
-              //                                   style: TextStyle(fontSize: 10.0),
-              //                                 ),
-              //                                 SizedBox(height: 20.0),
-              //                               ],
-              //                             ),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //                 const SizedBox(width: 8.0),
-              //                 Expanded(
-              //                   child: InkWell(
-              //                     onTap: (){},
-              //                     child: Container(
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: BorderRadius.circular(10.0),
-              //                         color: ContainerConstants.containerBackgroundColor,
-              //                       ),
-              //                       child: const Column(
-              //                         children: [
-              //                           InkWell(
-              //                             child: Column(
-              //                               children: [
-              //                                 SizedBox(height: 20.0),
-              //                                 Icon(Icons.headset_mic_outlined, size: 30.0),
-              //                                 Text(Constants.helpSupport,style: TextStyle(fontSize: 12.0),),
-              //                                 Text(
-              //                                   Constants.WeAreHereToHelp,
-              //                                   style: TextStyle(fontSize: 10.0),
-              //                                 ),
-              //                                 SizedBox(height: 20.0),
-              //                               ],
-              //                             ),
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Container(
-              //     color: Colors.transparent,
-              //     child: Column(
-              //       children: [
-              //         Container(
-              //           width:double.infinity,
-              //           decoration: BoxDecoration(
-              //             color: ContainerConstants.dropdownColor,
-              //             borderRadius: BorderRadius.circular(4.0),
-              //           ),
-              //           child: DropdownButtonHideUnderline(
-              //             child: DropdownButton<String>(
-              //               value: _selectedItem2,
-              //               items: _items2.map((String item) {
-              //                 return DropdownMenuItem<String>(
-              //                   value: item,
-              //                   child: Padding(
-              //                     padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              //                     child: Text(item),
-              //                   ),
-              //                 );
-              //               }).toList(),
-              //               onChanged: (String? newValue) {
-              //                 setState(() {
-              //                   if (_selectedItem2 == newValue) {
-              //                     _showContainers2 = !_showContainers2;
-              //                   } else {
-              //                     _selectedItem2 = newValue!;
-              //                     _showContainers2 = true;
-              //                   }
-              //                 });
-              //               },
-              //               dropdownColor: ContainerConstants.dropdownColor,
-              //               iconEnabledColor: ConstantsIcon.iconColor,
-              //               icon: _showContainers2
-              //                   ? const Icon(Icons.arrow_drop_up)
-              //                   : const Icon(Icons.arrow_drop_down),
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(height:8.0),
-              //         if (_showContainers2) ...[
-              //           Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: Row(
-              //               children: [
-              //                 Expanded(
-              //                   child: InkWell(
-              //                     onTap: (){},
-              //                     child: Container(
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: BorderRadius.circular(10.0),
-              //                         color: ContainerConstants.containerBackgroundColor,
-              //                       ),
-              //                       child: const Column(
-              //                         children: [
-              //                           Column(
-              //                             children: [
-              //                               SizedBox(height: 20.0),
-              //                               Icon(Icons.add_shopping_cart_outlined, size: 30.0),
-              //                               Text(Constants.shop),
-              //                               Text(
-              //                                 Constants.viewandmanagepurchases,
-              //                                 style: TextStyle(fontSize: 10.0),
-              //                               ),
-              //                               SizedBox(height: 20.0),
-              //                             ],
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //                 const SizedBox(width: 8.0),
-              //                 Expanded(
-              //                   child: InkWell(
-              //                     onTap: (){},
-              //                     child: Container(
-              //                       decoration: BoxDecoration(
-              //                         borderRadius: BorderRadius.circular(10.0),
-              //                         color: ContainerConstants.containerBackgroundColor,
-              //                       ),
-              //                       child: const Column(
-              //                         children: [
-              //                           Column(
-              //                             children: [
-              //                               SizedBox(height: 20.0),
-              //                               Icon(Icons.recent_actors_outlined, size: 30.0),
-              //                               Text(Constants.recentActivity,
-              //                                 style: TextStyle(fontSize: 12.0),),
-              //                               Text(
-              //                                 Constants.viewRecentTransactions,
-              //                                 style: TextStyle(fontSize: 10.0),
-              //                               ),
-              //                               SizedBox(height: 20.0),
-              //                             ],
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ],
-              //       ],
-              //     ),
-              //   ),
-              // ),
-            ],
+            ),
+
+            SizedBox(height: 20),
+
+            // Recent Articles Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Recent Articles",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return _buildArticleCard(context, "Article $index");
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFeatureTile(BuildContext context, String imagePath, String title) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10)
+        )
+      ),
+      child: Column(
+        children: [
+          Image.asset(
+            imagePath,
+            width: 80,
+            height: 80,
           ),
-        );
-      },
+          SizedBox(height: 10),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEventCard(BuildContext context, String title, String date) {
+    return Container(
+      width: 200,
+      margin: EdgeInsets.only(right: 10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(colors: [
+          ContainerConstants.appBarColor,
+          ContainerConstants.containerBackgroundColor,
+
+        ]),
+        color: ContainerConstants.appBarColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+            ),
+          ),
+          const SizedBox(height: 5),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              date,
+              style: TextStyle(fontSize: 14,color: Colors.white),
+            ),
+          ),
+          const Spacer(),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigate to event details
+              },
+              child: Text("Learn More",style: TextStyle(color: Colors.white),),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                backgroundColor: ContainerConstants.blackColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildArticleCard(BuildContext context, String title) {
+    return Card(
+      color: ContainerConstants.appBarColor,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: ListTile(
+        title: Text(title,style: TextStyle(color: Colors.white),),
+        subtitle: const Text("An engaging article about youth leadership.",style: TextStyle(color: Colors.white),),
+        trailing: Icon(Icons.arrow_forward_ios,color: Colors.white,),
+        onTap: () {
+          // Navigate to article details
+        },
+      ),
     );
   }
 }

@@ -44,8 +44,9 @@ class _HtmlapiState extends State<Htmlapi> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: FutureBuilder(
-                  future: value.FuturefetchDataArticle_specific(),
+                  future: value.fetchDataWithBackoff(),
                   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+
                     if(snapshot.hasError){
                       return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                     }

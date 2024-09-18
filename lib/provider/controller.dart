@@ -17,6 +17,7 @@ class AppProvider extends ChangeNotifier{
   int article_specific_id=0;
   String userphone="";
   String usertype="";
+
   bool logout_status=false;
   AppProvider(){
     getarticle();
@@ -52,8 +53,6 @@ class AppProvider extends ChangeNotifier{
     articleval=prefs.getString("catid")??"no catid";
     articletitle=prefs.getString("articletitle")??"no article ID";
     article_specific_id=prefs.getInt("specificid")??0;
-
-    print(articletitle);
     notifyListeners();
   }
   getuserdata()async{
@@ -211,34 +210,6 @@ class AppProvider extends ChangeNotifier{
     }
 
   }
-  Future<List<dynamic>?> fetchData() async {
-    try{
-      var url = Uri.parse('https://portal.ylpghanaapp.com/api/v1/ylp');
-      var response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body)['data'];
-        if (data is List) {
-          return data;  // Return the data as a List
-        } else {
-          return [];  // Return an empty list if the data is not a List
-        }
-      } else {
-        print('Failed to fetch data: ${response.statusCode}');
-        return null;  // Return null in case of failure
-      }
-    }catch(e){
-      print(e);
-    }
-
-  }
-
-
   Future<List<dynamic>?> fetchDataArticle() async {
     try{
       var url = Uri.parse('https://portal.ylpghanaapp.com/api/v1/ylp?catID[eq]=${articleval}');
@@ -265,54 +236,37 @@ class AppProvider extends ChangeNotifier{
     }
 
   }
+  Future<String> fetchDataWithBackoff({int retryCount = 0}) async {
+     var url = Uri.parse('https://portal.ylpghanaapp.com/api/v1/ylp/$article_specific_id}');
+     try {
+       var response = await http.get(
+         url,
+         headers: {
+           'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+         },
+       );
 
-  FuturefetchDataArticle_specific() async {
-    try{
-      var url = Uri.parse('https://portal.ylpghanaapp.com/api/v1/ylp?catID[eq]=${articleval}');
-      var response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body)['data'];
-        for (var item in data) {
-          if(article_specific_id==int.parse(item['id'])){
-            return item['article'];
-          }
-          else
-            {
-              print("id");
-            }
-          // Access individual properties
-        }
-
-        // for (int i=0; i<data.length;i++) {
-        //   print(article_specific_id);
-        //   print(data['id'][i]);
-        //
-        //   if(article_specific_id.toString()==data['id'][i].toString()){
-        //     htmlData += data['article'][i];
-        //
-        //   }
-        //   //   htmlData = region['article'];//"<h2>${region['title']}</h2>";
-        // }
-
-        // Assuming the API returns a list of articles, convert it to HTML
-
-      } else {
-        return "<p>Error fetching data. Status code: ${response.statusCode}</p>";
-      }
-    }catch(e){
-      print(e);
-    }
-
-    notifyListeners();
-  }
-
-  Future<void> signInWithGoogle() async {
+       if (response.statusCode == 200) {
+         var data = jsonDecode(response.body)['data'];
+         return data['article'];
+       } else if (response.statusCode == 429) {
+         if (retryCount < 5) {
+           int delay = (retryCount + 1) * 1000; // Exponential backoff
+           print("Rate limit exceeded. Retrying in $delay milliseconds...");
+           await Future.delayed(Duration(milliseconds: delay));
+           return fetchDataWithBackoff(retryCount: retryCount + 1);
+         } else {
+           return "<p>Too many requests. Please try again later.</p>";
+         }
+       } else {
+         return "<p>Error fetching data. Status code: ${response.statusCode}</p>";
+       }
+     } catch (e) {
+       print(e);
+       return "<p>Exception occurred: $e</p>";
+     }
+   }
+   Future<void> signInWithGoogle() async {
     // Create a new provider
     try {
       GoogleAuthProvider googleProvider = GoogleAuthProvider();

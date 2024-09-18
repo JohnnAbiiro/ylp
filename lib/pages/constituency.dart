@@ -51,10 +51,10 @@ class Constituency extends StatelessWidget {
                   if(!snapshot.hasData){
                     return Text("No Data");
                   }
-                  else if(snapshot.hasError){
+                   if(snapshot.hasError){
                     return Text("Error: ${snapshot.error}");
                   }
-                  else if(snapshot.connectionState==ConnectionState.waiting){
+                   if(snapshot.connectionState==ConnectionState.waiting){
                     return Text("Please Wait");
                   }
                   return  GridView.builder(
@@ -70,7 +70,6 @@ class Constituency extends StatelessWidget {
                         var name=data['constituencyName'];
                         var code=data['constituencyCode'];
                         var pscount=data['pollstCount'];
-                        print(snapshot);
 
                         return InkWell(
                           onTap: (){
@@ -80,7 +79,7 @@ class Constituency extends StatelessWidget {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                color: Constants.loginTextColor,
+                                color: ContainerConstants.appBarColor,
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Padding(

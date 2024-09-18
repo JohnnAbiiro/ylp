@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>383281681009-7hipasuhjuso8jjlq8s2tmnhdibe4k4m.apps.googleusercontent.com</string>
+	<string>310722748852-tuj5sr1689t30pi40krdsvid8tmgnc8q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.383281681009-7hipasuhjuso8jjlq8s2tmnhdibe4k4m</string>
+	<string>com.googleusercontent.apps.310722748852-tuj5sr1689t30pi40krdsvid8tmgnc8q</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>383281681009-86h4cktof43hh84g0kj1o9ki7bjuk8gc.apps.googleusercontent.com</string>
+	<string>310722748852-hajni70vv1n2c9ml2glvmrvuldo3ing3.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDy_be63IQrEf2Ndp7Hd38zEZSbL-ZpUcw</string>
+	<string>AIzaSyDUgQRfpgi4Gjpzx8YohRkubKoAdU3zfdI</string>
 	<key>GCM_SENDER_ID</key>
-	<string>383281681009</string>
+	<string>310722748852</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.vsoft.ylp</string>
 	<key>PROJECT_ID</key>
-	<string>ylpapp-66bd6</string>
+	<string>africanstraw-e03e1</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ylpapp-66bd6.appspot.com</string>
+	<string>africanstraw-e03e1.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:383281681009:ios:754f5116f69be257f9c1d0</string>
-	<key>DATABASE_URL</key>
-	<string>https://ylpapp-66bd6-default-rtdb.firebaseio.com</string>
+	<string>1:310722748852:ios:fd551e0f495882fc1392e1</string>
 </dict>
 </plist>
