@@ -87,7 +87,7 @@ class AppProvider extends ChangeNotifier{
       }
       else
       {
-        print("Unseccessful");
+        print("Unsuccessful ${response.statusCode}");
         return [{"Error":"Bad Response"}];
       }
 
@@ -96,33 +96,94 @@ class AppProvider extends ChangeNotifier{
     }
 
   }
-  Future<List<dynamic>?> articles_category()async{
-    try{
-      var url=Uri.parse("https://portal.ylpghanaapp.com/api/v1/ylpcat");
-      var response=await http.get(url,headers: {
-        'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
-      });
-      if(response.statusCode==200){
-        var data = jsonDecode(response.body)['data'];
-        if (data is List) {
-          return data;  // Return the data as a List
-        } else {
-          return [];  // Return an empty list if the data is not a List
-        }
+   Future<List<dynamic>?> articles_category({int retryCount = 0}) async {
+     const int maxRetries = 5;
+     const int backoffFactor = 2;
 
-      }
-      else
-      {
-        print("Unseccessful");
-        return [{"Error":"Bad Response"}];
-      }
+     try {
+       var url = Uri.parse("https://portal.ylpghanaapp.com/api/v1/ylpcat");
+       var response = await http.get(
+         url,
+         headers: {
+           'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+         },
+       );
 
-    }catch(e){
-      print(e);
+       if (response.statusCode == 200) {
+         var data = jsonDecode(response.body)['data'];
+         if (data is List) {
+           return data;
+         } else {
+           return [];
+         }
+       } else if (response.statusCode == 429) {
+         final retryAfter = response.headers['retry-after'];
+         final retryAfterDuration = retryAfter != null
+             ? Duration(seconds: int.parse(retryAfter))
+             : Duration(seconds: backoffFactor * retryCount);
 
-    }
-
-  }
+         if (retryCount < maxRetries) {
+           await Future.delayed(retryAfterDuration);
+           return await articles_category(retryCount: retryCount + 1);
+         } else {
+           return [{"Error": "Rate limit exceeded. Max retries reached."}];
+         }
+       } else {
+         return [{"Error": "Bad Response ${response.statusCode}"}];
+       }
+     } catch (e) {
+       return [{"Error": "Exception: $e"}];
+     }
+   }
+   // Future<List<dynamic>?> articles_category({int retryCount = 0}) async {
+   //   const int maxRetries = 5; // Maximum number of retry attempts
+   //   const int backoffFactor = 2; // Exponential backoff factor
+   //
+   //   try {
+   //     var url = Uri.parse("https://portal.ylpghanaapp.com/api/v1/ylpcat");
+   //     var response = await http.get(
+   //       url,
+   //       headers: {
+   //         'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+   //       },
+   //     );
+   //
+   //     // Check if the request was successful
+   //     if (response.statusCode == 200) {
+   //       var data = jsonDecode(response.body)['data'];
+   //       if (data is List) {
+   //         return data; // Return the data as a List
+   //       } else {
+   //         return []; // Return an empty list if the data is not a List
+   //       }
+   //     }
+   //     // Handle the 429 (Too Many Requests) error
+   //     else if (response.statusCode == 429) {
+   //       print("429 Occured");
+   //       final retryAfter = response.headers['retry-after'];
+   //       final retryAfterDuration = retryAfter != null
+   //           ? Duration(seconds: int.parse(retryAfter))
+   //           : Duration(seconds: backoffFactor * retryCount);
+   //
+   //       if (retryCount < maxRetries) {
+   //         print('Rate limit exceeded. Retrying after ${retryAfterDuration.inSeconds} seconds.');
+   //         await Future.delayed(retryAfterDuration);
+   //         return await articles_category(retryCount: retryCount + 1); // Retry the request
+   //       } else {
+   //         print('Max retries reached. Please try again later.');
+   //         return [{"Error": "Rate limit exceeded. Max retries reached."}];
+   //       }
+   //     } else {
+   //       // Handle other unsuccessful status codes
+   //       print("Unsuccessful ${response.statusCode}");
+   //       return [{"Error": "Bad Response ${response.statusCode}"}];
+   //     }
+   //   } catch (e) {
+   //     // Catch and print any errors
+   //     print('Error: $e');
+   //     return [{"Error": "Exception caught: $e"}];
+   //   }
+   // }
 
   Future<List<dynamic>?> constituencydata()async{
     try{

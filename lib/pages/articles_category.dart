@@ -41,31 +41,23 @@ class _Article_categoryState extends State<Article_category> {
 
   @override
   Widget build(BuildContext context) {
-    // Filter the event list based on the search query
-    // List<Map<String, String>> _filteredEvents = _events.where((event) {
-    //   final eventTitle = event['title']!.toLowerCase();
-    //   final eventLocation = event['location']!.toLowerCase();
-    //   final searchLower = _searchQuery.toLowerCase();
-    //   return eventTitle.contains(searchLower) || eventLocation.contains(searchLower);
-    // }).toList();
-
     return Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
-        if(value.auth==null){
+        if(value.auth.currentUser==null){
           value.logout(context);
         }
         return Scaffold(
           appBar: AppBar(
             leading: InkWell(onTap:(){
               Navigator.pushNamed(context, Routes.dashboard);
-            },child: Icon(Icons.arrow_back,color: Colors.white,)),
+            },child: const Icon(Icons.arrow_back,color: Colors.white,)),
             title: _isSearching
                 ? TextFormField(
               autofocus: true,
               decoration:  InputDecoration(
                 hintText: '${value.articletitle} Events...',
                 border: InputBorder.none,
-                hintStyle: TextStyle(color: Colors.white),
+                hintStyle: const TextStyle(color: Colors.white),
               ),
               style: const TextStyle(color: Colors.white),
               onChanged: (query) {
@@ -134,30 +126,29 @@ class _Article_categoryState extends State<Article_category> {
 
                              // final event = _filteredEvents[index];
                               return Card(
+                                color: ContainerConstants.appBarColor,
                                 elevation: 4.0,
                                 margin: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.all(16.0),
-                                  title: Text(title, style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600)),
+                                  title: Text(title, style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600,color: Colors.white)),
                                   subtitle: const Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(height: 8.0),
-                                      Text("Short Description"),
+                                      Text("Short Description",style: TextStyle(color: Colors.white),),
                                       SizedBox(height: 8.0),
-                                      Text('Date: 19/01/2020',style: TextStyle(fontSize: 12.0),),
-                                      Text('Location: "location"',style: TextStyle(fontSize: 12.0),),
+                                      Text('Date: 19/01/2020',style: TextStyle(fontSize: 12.0,color: Colors.white),),
+                                      Text('Location: "location"',style: TextStyle(fontSize: 12.0,color: Colors.white),),
                                     ],
                                   ),
-                                  trailing: const Icon(Icons.event),
+                                  trailing: const Icon(Icons.event,color: Colors.white,),
                                   onTap: () async{
                                     value.setarticle(value.articleval, title);
                                     value.setarticle_specifi(id);
                                     value.getarticle();
                                    // value.fetchDataArticle_specific();
                                     Navigator.pushNamed(context, Routes.html_data);
-
-
                                   },
                                 ),
                               );

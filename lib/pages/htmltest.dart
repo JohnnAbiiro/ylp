@@ -41,33 +41,24 @@ class _HtmlapiState extends State<Htmlapi> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FutureBuilder(
-                    future: value.FuturefetchDataArticle_specific(),
-                    builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                      if(snapshot.hasError){
-                        return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
-                      }
-                      if(snapshot.connectionState==ConnectionState.waiting){
-                        return const Center(child: Text("Please wait..",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
-                      }
-
-                      if(!snapshot.hasData){
-                        return const Center(child: Text("Please Wait...",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
-                      }
-                      return HtmlWidget(
-
-                        renderMode: RenderMode.column,
-                        textStyle: TextStyle(
-                          fontSize: 20,
-                        ),
-                        enableCaching: true,
-                        snapshot.data,
-                      );
-                    },
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FutureBuilder(
+                  future: value.FuturefetchDataArticle_specific(),
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if(snapshot.hasError){
+                      return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                    }
+                    if(snapshot.connectionState==ConnectionState.waiting){
+                      return const Center(child: Text("Please wait..",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                    }
+                    if(!snapshot.hasData){
+                      return const Center(child: Text("Please Wait...",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                    }
+                    return HtmlWidget(
+                      snapshot.data,
+                    );
+                  },
                 ),
               ),
             ),

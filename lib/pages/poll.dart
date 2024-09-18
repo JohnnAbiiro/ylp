@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:ylp/provider/controller.dart';
 import '../provider/routes.dart';
+import '../shimmer.dart';
 import 'constants.dart';
 import 'header.dart';
 import 'containerconstants.dart';
@@ -153,13 +155,17 @@ class _PollState extends State<Poll> {
               future: value.articles_category(),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if(snapshot.hasError){
-                  return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                  //return const Center(child: Text("Error!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                  return ShimmerDurationExample();
                 }
                 if(snapshot.connectionState==ConnectionState.waiting){
-                  return const Center(child: Text("Please wait",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                  return  ShimmerDurationExample();
+
+                  //return const Center(child: Text("Please wait",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }
                 if(!snapshot.hasData){
-                  return const Center(child: Text("Waiting for data!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
+                  return ShimmerDurationExample();
+                  //return const Center(child: Text("Waiting for data!!",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));
                 }
                 return GridView.builder(
                     gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
@@ -259,21 +265,21 @@ class _PollPageState extends State<PollPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text("Submit Poll"),
-          content: Text("Are you sure you want to submit your answers?"),
+          title: const Text("Submit Poll"),
+          content: const Text("Are you sure you want to submit your answers?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 _showSubmissionConfirmation();
               },
-              child: Text("Submit"),
+              child: const Text("Submit"),
             ),
           ],
         ),
