@@ -85,37 +85,6 @@ class _CivicSocietyState extends State<CivicSociety> {
                   ),
                 ),
                 const SizedBox(height: 24.0),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _csos.length,
-                    itemBuilder: (context, index) {
-                      final cso = _csos[index];
-                      return Card(
-                        elevation: 4.0,
-                        margin: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(16.0),
-                          title: Text(
-                            cso['name']!,
-                            style: const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w600),
-                          ),
-                          subtitle: Text(cso['description']!,style: const TextStyle(fontSize: 12.0),),
-                          trailing: const Icon(Icons.arrow_forward),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => CSODetailPage(
-                                  name: cso['name']!,
-                                  description: cso['description']!,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ),
                 Center(
                   child: TextButton(
                     onPressed: () {

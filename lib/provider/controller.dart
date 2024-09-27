@@ -293,7 +293,7 @@ class AppProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  emaillogin(String email,String password,BuildContext context)async{
+   emaillogin(String email,String password,BuildContext context)async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try{
       await auth.signInWithEmailAndPassword(email: email, password: password);
