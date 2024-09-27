@@ -124,11 +124,11 @@ class _VideoTileState extends State<VideoTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Container(
       margin: const EdgeInsets.all(8),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
+        child: Wrap(
           children: [
             YoutubePlayer(
               controller: _controller,
