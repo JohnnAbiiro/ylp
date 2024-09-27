@@ -96,7 +96,7 @@ class _VideoTileState extends State<VideoTile> {
   void _loadVideo(String videoUrl) {
     String? videoId = _getYouTubeVideoId(videoUrl);
     if (videoId != null) {
-      _controller.loadVideoById(videoId: videoId);
+      _controller.cueVideoById(videoId: videoId);
     }
   }
 
