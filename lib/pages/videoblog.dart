@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-import '../constants/containerconstants.dart';
+
 
 class VideoBlog extends StatefulWidget {
   const VideoBlog({super.key});
@@ -34,10 +34,6 @@ class _VideoBlogState extends State<VideoBlog> {
 
   @override
   Widget build(BuildContext context) {
-    // Desired width for each tile
-    const double tileWidth = 200.0;
-    final int crossAxisCount = (MediaQuery.of(context).size.width / tileWidth).floor();
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -45,14 +41,15 @@ class _VideoBlogState extends State<VideoBlog> {
         child: videos.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:crossAxisCount,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 16 / 9,
-          ),
-          itemCount: videos.length,
-          itemBuilder: (context, index) {
+               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                    MediaQuery.of(context).size.width > 600 ? 2 : 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 16 / 9,
+                  ),
+              itemCount: videos.length,
+              itemBuilder: (context, index) {
             return VideoTile(
               videoUrl: videos[index]['url']!,
               videoTitle: videos[index]['title']!,
@@ -69,27 +66,23 @@ Future<List<Map<String, String>>> fetchVideoUrlsAndTitles() async {
 
   return [
     {
-      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
+      "url": "https://www.youtube.com/watch?v=-bUuQ4_XoZ8&t=195s",
       "title": "Empowering Women Entrepreneurs in Ghana",
     },
     {
-      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
+      "url": "https://www.youtube.com/watch?v=kU-pqiLHD8s&t=40s",
       "title": "The Future of Technology in Africa",
     },
     {
-      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-      "title": "Empowering Women Entrepreneurs in Ghana",
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-      "title": "Empowering Women Entrepreneurs in Ghana",
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
+      "url": "https://www.youtube.com/watch?v=kU-pqiLHD8s&t=40s",
       "title": "The Future of Technology in Africa",
     },
     {
-      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
+      "url": "https://www.youtube.com/watch?v=kU-pqiLHD8s&t=40s",
+      "title": "The Future of Technology in Africa",
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=kU-pqiLHD8s&t=40s",
       "title": "The Future of Technology in Africa",
     },
   ];
@@ -143,10 +136,11 @@ class _VideoTileState extends State<VideoTile> {
 
   @override
   Widget build(BuildContext context) {
-        final double Textsize = MediaQuery.of(context).size.width < 400 ? 12 : 14;
-
     return Container(
-      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10)
+      ),
+      margin: const EdgeInsets.all(8),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Wrap(
@@ -155,31 +149,13 @@ class _VideoTileState extends State<VideoTile> {
               controller: _controller,
               aspectRatio: 16 / 9,
             ),
+            const SizedBox(height: 8),
             // show video title
-            Container(
-              decoration: BoxDecoration(
-                  color: ContainerConstants.dropdownColor1,
-
-                  borderRadius:BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                  )
-              ),
-              child:
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.videoTitle,
-                  style: TextStyle(fontSize: Textsize,color: Colors.white),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                ),
-              ),
+            Text(
+              widget.videoTitle, 
+              style: const TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
-
           ],
         ),
       ),
