@@ -10,7 +10,7 @@ class VideoBlog extends StatefulWidget {
 }
 
 class _VideoBlogState extends State<VideoBlog> {
-  List<String> videoUrls = []; // This will hold the video URLs
+  List<String> videoUrls = []; 
 
   @override
   void initState() {
@@ -18,7 +18,7 @@ class _VideoBlogState extends State<VideoBlog> {
     _loadVideos();
   }
 
-  // Fetch video URLs from the database (mocked)
+  
   Future<void> _loadVideos() async {
     List<String> urls = await fetchVideoUrls();
     setState(() {
@@ -33,7 +33,7 @@ class _VideoBlogState extends State<VideoBlog> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: videoUrls.isEmpty
-            ? const Center(child: CircularProgressIndicator()) // Show loading indicator
+            ? const Center(child: Text("Loading...please wait")) 
             : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
@@ -84,7 +84,7 @@ class _VideoTileState extends State<VideoTile> {
     _loadVideo(widget.videoUrl);
   }
 
-  // Extract video ID from URL
+  
   String? _getYouTubeVideoId(String url) {
     Uri uri = Uri.parse(url);
     if (uri.queryParameters.containsKey('v')) {
@@ -92,8 +92,7 @@ class _VideoTileState extends State<VideoTile> {
     }
     return null;
   }
-
-  // Load video by video ID
+  
   void _loadVideo(String videoUrl) {
     String? videoId = _getYouTubeVideoId(videoUrl);
     if (videoId != null) {
