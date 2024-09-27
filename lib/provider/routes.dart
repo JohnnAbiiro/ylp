@@ -7,6 +7,7 @@ import 'package:ylp/pages/htmltest.dart';
 import 'package:ylp/pages/membership.dart';
 import 'package:ylp/pages/regions.dart';
 import 'package:ylp/pages/titles.dart';
+import 'package:ylp/pages/videoblog.dart';
 
 import '../shimmer.dart';
 
@@ -21,6 +22,7 @@ class Routes{
   static String constituency="constituency";
   static String article_category="article_category";
   static String shimmer="shimmer";
+  static String videoblog="videoblog";
 
 }
 
@@ -35,4 +37,5 @@ final pages={
   Routes.constituency:(context)=> Constituency(),
   Routes.article_category:(context)=> Article_category(),
   Routes.shimmer:(context)=> ShimmerDurationExample(),
+  Routes.videoblog:(context)=> VideoBlog(),
 };

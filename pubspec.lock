@@ -1181,6 +1181,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.5.0"
+  youtube_player_iframe:
+    dependency: "direct main"
+    description:
+      name: youtube_player_iframe
+      sha256: db0e7aab8ac29c9e417dd145b522b18085fb505b85eb3c61e893341b129fe980
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.0"
+  youtube_player_iframe_web:
+    dependency: transitive
+    description:
+      name: youtube_player_iframe_web
+      sha256: "73dd7bbbe8a6519b5d58905122153e38591f753ad2df40b5328a9d8474e1587e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
 sdks:
   dart: ">=3.5.1 <4.0.0"
   flutter: ">=3.24.0"
