@@ -10,11 +10,21 @@ class VideoBlog extends StatefulWidget {
 }
 
 class _VideoBlogState extends State<VideoBlog> {
-  final List<String> videoUrls = [
-    "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-    "https://www.youtube.com/watch?v=MJ5HksruKgE",
-    // Add more URLs as needed
-  ];
+  List<String> videoUrls = []; // This will hold the video URLs
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVideos();
+  }
+
+  // Fetch video URLs from the database (mocked)
+  Future<void> _loadVideos() async {
+    List<String> urls = await fetchVideoUrls();
+    setState(() {
+      videoUrls = urls;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +32,15 @@ class _VideoBlogState extends State<VideoBlog> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: GridView.builder(
+        child: videoUrls.isEmpty
+            ? const Center(child: CircularProgressIndicator()) // Show loading indicator
+            : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: MediaQuery.of(context).size.width > 600 ? 2 : 1, // Adjust grid based on screen width
+            crossAxisCount:
+            MediaQuery.of(context).size.width > 600 ? 2 : 1,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
-            childAspectRatio: 16 / 9, // Aspect ratio for the video tiles
+            childAspectRatio: 16 / 9,
           ),
           itemCount: videoUrls.length,
           itemBuilder: (context, index) {
@@ -37,6 +50,15 @@ class _VideoBlogState extends State<VideoBlog> {
       ),
     );
   }
+}
+
+Future<List<String>> fetchVideoUrls() async {
+  await Future.delayed(const Duration(seconds: 4));
+
+  return [
+    "https://www.youtube.com/watch?v=fGoFE3DS6sk",
+    "https://www.youtube.com/watch?v=MJ5HksruKgE",
+  ];
 }
 
 class VideoTile extends StatefulWidget {
@@ -62,7 +84,7 @@ class _VideoTileState extends State<VideoTile> {
     _loadVideo(widget.videoUrl);
   }
 
-  // extract video ID from URL
+  // Extract video ID from URL
   String? _getYouTubeVideoId(String url) {
     Uri uri = Uri.parse(url);
     if (uri.queryParameters.containsKey('v')) {
