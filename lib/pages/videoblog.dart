@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-
+import '../constants/containerconstants.dart';
 
 class VideoBlog extends StatefulWidget {
   const VideoBlog({super.key});
@@ -34,6 +34,10 @@ class _VideoBlogState extends State<VideoBlog> {
 
   @override
   Widget build(BuildContext context) {
+    // Desired width for each tile
+    const double tileWidth = 200.0;
+    final int crossAxisCount = (MediaQuery.of(context).size.width / tileWidth).floor();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -42,8 +46,7 @@ class _VideoBlogState extends State<VideoBlog> {
             ? const Center(child: CircularProgressIndicator())
             : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:
-            MediaQuery.of(context).size.width > 600 ? 2 : 1,
+            crossAxisCount:crossAxisCount,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             childAspectRatio: 16 / 9,
@@ -68,6 +71,22 @@ Future<List<Map<String, String>>> fetchVideoUrlsAndTitles() async {
     {
       "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
       "title": "Empowering Women Entrepreneurs in Ghana",
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
+      "title": "The Future of Technology in Africa",
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
+      "title": "Empowering Women Entrepreneurs in Ghana",
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
+      "title": "Empowering Women Entrepreneurs in Ghana",
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
+      "title": "The Future of Technology in Africa",
     },
     {
       "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
@@ -125,7 +144,7 @@ class _VideoTileState extends State<VideoTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Wrap(
@@ -134,13 +153,31 @@ class _VideoTileState extends State<VideoTile> {
               controller: _controller,
               aspectRatio: 16 / 9,
             ),
-            const SizedBox(height: 8),
             // show video title
-            Text(
-              widget.videoTitle, 
-              style: const TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
+            Container(
+              decoration: BoxDecoration(
+                  color: ContainerConstants.dropdownColor1,
+
+                  borderRadius:BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                  )
+              ),
+              child:
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.videoTitle,
+                  style: TextStyle(fontSize: MediaQuery.of(context).size.width < 400 ? 12 : 14,),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                ),
+              ),
             ),
+            const SizedBox(height: 20),
+
           ],
         ),
       ),
