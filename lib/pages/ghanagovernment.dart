@@ -14,7 +14,6 @@ class GovernmentOfGhana extends StatefulWidget {
 class _GovernmentOfGhanaState extends State<GovernmentOfGhana> {
   String searchQuery = '';
   bool isSearching = false;
-
   List<Map<String, String>> officials = [
     {
       'title': 'President of Ghana',
@@ -65,45 +64,45 @@ class _GovernmentOfGhanaState extends State<GovernmentOfGhana> {
     }).toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: isSearching
-            ? TextField(
-          autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'Search...',
-            border: InputBorder.none,
-            hintStyle: TextStyle(color: ConstantsTextColor.logintext),
-          ),
-          style: const TextStyle(color: ConstantsTextColor.logintext),
-          onChanged: (value) {
-            setState(() {
-              searchQuery = value;
-            });
-          },
-        )
-            : const Text(
-          'Government of Ghana',
-          style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 18.0),
-        ),
-        centerTitle: true,
-        backgroundColor: ContainerConstants.appBarColor,
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(isSearching ? Icons.close : Icons.search),
-            onPressed: () {
-              setState(() {
-                if (isSearching) {
-                  searchQuery = '';
-                }
-                isSearching = !isSearching;
-              });
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: isSearching
+      //       ? TextField(
+      //     autofocus: true,
+      //     decoration: const InputDecoration(
+      //       hintText: 'Search...',
+      //       border: InputBorder.none,
+      //       hintStyle: TextStyle(color: ConstantsTextColor.logintext),
+      //     ),
+      //     style: const TextStyle(color: ConstantsTextColor.logintext),
+      //     onChanged: (value) {
+      //       setState(() {
+      //         searchQuery = value;
+      //       });
+      //     },
+      //   )
+      //       : const Text(
+      //     'Government of Ghana',
+      //     style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 18.0),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: ContainerConstants.appBarColor,
+      //   iconTheme: const IconThemeData(
+      //     color: Colors.white,
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(isSearching ? Icons.close : Icons.search),
+      //       onPressed: () {
+      //         setState(() {
+      //           if (isSearching) {
+      //             searchQuery = '';
+      //           }
+      //           isSearching = !isSearching;
+      //         });
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(
@@ -122,7 +121,6 @@ class _GovernmentOfGhanaState extends State<GovernmentOfGhana> {
                   direction: isWideScreen ? Axis.horizontal : Axis.vertical,
                   children: filteredOfficials.map((official) {
                     return SizedBox(
-                      width: isWideScreen ? 300 : double.infinity,
                       child: _buildGovernmentCard(
                         context,
                         official['title']!,

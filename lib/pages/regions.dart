@@ -35,14 +35,14 @@ class RegionList extends StatelessWidget {
           value.logout(context);
         }
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: ContainerConstants.appBarColor,
-            leading: InkWell(onTap:(){
-              Navigator.pushNamed(context, Routes.dashboard);
-            },child: Icon(Icons.arrow_back,color: Colors.white,)),
-            title: Text("Regions",style: TextStyle(color: Colors.white),),
-            centerTitle: true,
-          ),
+          // appBar: AppBar(
+          //   backgroundColor: ContainerConstants.appBarColor,
+          //   leading: InkWell(onTap:(){
+          //     Navigator.pushNamed(context, Routes.dashboard);
+          //   },child: Icon(Icons.arrow_back,color: Colors.white,)),
+          //   title: Text("Regions",style: TextStyle(color: Colors.white),),
+          //   centerTitle: true,
+          // ),
           body: Padding(
               padding: const EdgeInsets.all(10.0),
               child: FutureBuilder(

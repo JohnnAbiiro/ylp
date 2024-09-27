@@ -49,43 +49,43 @@ class _ParliamentOfGhanaState extends State<ParliamentOfGhana> {
     }).toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: isSearching
-            ? TextField(
-          autofocus: true,
-          style: const TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
-          decoration: const InputDecoration(
-            hintText: 'Search...',
-            hintStyle: TextStyle(color: ConstantsTextColor.logintext),
-            border: InputBorder.none,
-          ),
-          onChanged: (value) {
-            setState(() {
-              searchQuery = value;
-            });
-          },
-        )
-            : const Text(
-          'Parliament of Ghana',
-          style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
-        ),
-        centerTitle: true,
-        backgroundColor: ContainerConstants.appBarColor,
-        iconTheme: const IconThemeData(
-          color: ConstantsTextColor.logintext,
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(isSearching ? Icons.close : Icons.search),
-            onPressed: () {
-              setState(() {
-                isSearching = !isSearching;
-                searchQuery = '';
-              });
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: isSearching
+      //       ? TextField(
+      //     autofocus: true,
+      //     style: const TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+      //     decoration: const InputDecoration(
+      //       hintText: 'Search...',
+      //       hintStyle: TextStyle(color: ConstantsTextColor.logintext),
+      //       border: InputBorder.none,
+      //     ),
+      //     onChanged: (value) {
+      //       setState(() {
+      //         searchQuery = value;
+      //       });
+      //     },
+      //   )
+      //       : const Text(
+      //     'Parliament of Ghana',
+      //     style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: ContainerConstants.appBarColor,
+      //   iconTheme: const IconThemeData(
+      //     color: ConstantsTextColor.logintext,
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(isSearching ? Icons.close : Icons.search),
+      //       onPressed: () {
+      //         setState(() {
+      //           isSearching = !isSearching;
+      //           searchQuery = '';
+      //         });
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(

@@ -45,7 +45,7 @@ class _ApptitleState extends State<Apptitle> {
             title: Text('LIST OF ARTICLES',style: TextStyle(color: Colors.white),)
         ),
         body: FutureBuilder<List<dynamic>?>(
-          future: value.fetchData(),  // Call the updated fetchData function
+          future: null, //value.fetchData(),  // Call the updated fetchData function
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: Text("Please Wait...",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),));//const Center(child: CircularProgressIndicator());  // Show loading spinner

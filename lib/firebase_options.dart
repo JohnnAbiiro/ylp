@@ -49,8 +49,6 @@ class DefaultFirebaseOptions {
     measurementId: 'G-1T7RMH0T0Q',
   );
 
-
-
 static const FirebaseOptions android = FirebaseOptions(
   apiKey: 'AIzaSyDyaCHxskmo8-6KYTxVEOIir2wxg5RIMoM',
   appId: '1:383281681009:android:1f2af052032a6bd0f9c1d0',
@@ -60,17 +58,16 @@ static const FirebaseOptions android = FirebaseOptions(
   storageBucket: 'ylpapp-66bd6.appspot.com',
 );
 
-static const FirebaseOptions ios = FirebaseOptions(
-  apiKey: 'AIzaSyDy_be63IQrEf2Ndp7Hd38zEZSbL-ZpUcw',
-  appId: '1:383281681009:ios:754f5116f69be257f9c1d0',
-  messagingSenderId: '383281681009',
-  projectId: 'ylpapp-66bd6',
-  databaseURL: 'https://ylpapp-66bd6-default-rtdb.firebaseio.com',
-  storageBucket: 'ylpapp-66bd6.appspot.com',
-  androidClientId: '383281681009-86h4cktof43hh84g0kj1o9ki7bjuk8gc.apps.googleusercontent.com',
-  iosClientId: '383281681009-7hipasuhjuso8jjlq8s2tmnhdibe4k4m.apps.googleusercontent.com',
-  iosBundleId: 'com.vsoft.ylp',
-);
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDUgQRfpgi4Gjpzx8YohRkubKoAdU3zfdI',
+    appId: '1:310722748852:ios:fd551e0f495882fc1392e1',
+    messagingSenderId: '310722748852',
+    projectId: 'africanstraw-e03e1',
+    storageBucket: 'africanstraw-e03e1.appspot.com',
+    androidClientId: '310722748852-hajni70vv1n2c9ml2glvmrvuldo3ing3.apps.googleusercontent.com',
+    iosClientId: '310722748852-tuj5sr1689t30pi40krdsvid8tmgnc8q.apps.googleusercontent.com',
+    iosBundleId: 'com.vsoft.ylp',
+  );
 
 static const FirebaseOptions macos = FirebaseOptions(
   apiKey: 'AIzaSyDy_be63IQrEf2Ndp7Hd38zEZSbL-ZpUcw',

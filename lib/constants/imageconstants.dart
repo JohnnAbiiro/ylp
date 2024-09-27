@@ -32,4 +32,12 @@ class ConstantsImage{
   static const String majorityLeaderImage ="images/alex.jpg";
   static const String minorityLeaderImage ="images/forson.jpg";
   static const String committeeImage ="images/committee.jpg";
+  static const String background ="images/202.jpg";
+  static const String bg1 ="images/staff-training.jpg";
+  static const String bg2 ="images/bg2.jpg";
+  static const String bg3 ="images/bg3.jpg";
+  //dashboard images
+  static const String leader="images/dashboard/leader.webp";
+  static const String training="images/dashboard/training.jpg";
+  static const String polls="images/dashboard/polls.jpg";
 }
