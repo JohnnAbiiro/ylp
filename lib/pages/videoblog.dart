@@ -143,6 +143,8 @@ class _VideoTileState extends State<VideoTile> {
 
   @override
   Widget build(BuildContext context) {
+        final int Textsize = MediaQuery.of(context).size.width < 400 ? 12 : 14,;
+
     return Container(
       margin: const EdgeInsets.all(10),
       child: Padding(
@@ -168,7 +170,7 @@ class _VideoTileState extends State<VideoTile> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.videoTitle,
-                  style: TextStyle(fontSize: MediaQuery.of(context).size.width < 400 ? 12 : 14,),
+                  style: TextStyle(fontSize: Textsize),
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
