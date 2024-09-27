@@ -168,7 +168,7 @@ class _VideoTileState extends State<VideoTile> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   widget.videoTitle,
-                  style: TextStyle(fontSize: MediaQuery.of(context).size.width < 400 ? 12 : 14,),
+                  style: TextStyle(fontSize: MediaQuery.of(context).size.width < 400 ? 12 : 14,color: Colors.white),
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
