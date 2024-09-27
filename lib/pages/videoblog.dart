@@ -10,7 +10,7 @@ class VideoBlog extends StatefulWidget {
 }
 
 class _VideoBlogState extends State<VideoBlog> {
-  List<String> videoUrls = []; 
+  List<Map<String, String>> videos = [];
 
   @override
   void initState() {
@@ -18,13 +18,19 @@ class _VideoBlogState extends State<VideoBlog> {
     _loadVideos();
   }
 
-  
   Future<void> _loadVideos() async {
-    List<String> urls = await fetchVideoUrls();
-    setState(() {
-      videoUrls = urls;
-    });
+    try {
+      List<Map<String, String>> videoData = await fetchVideoUrlsAndTitles();
+      setState(() {
+        videos = videoData;
+      });
+    } catch (error) {
+      setState(() {
+        videos = [];
+      });
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +38,8 @@ class _VideoBlogState extends State<VideoBlog> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: videoUrls.isEmpty
-            ? const Center(child: Text("Loading...please wait")) 
+        child: videos.isEmpty
+            ? const Center(child: CircularProgressIndicator())
             : GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
@@ -42,9 +48,12 @@ class _VideoBlogState extends State<VideoBlog> {
             mainAxisSpacing: 10,
             childAspectRatio: 16 / 9,
           ),
-          itemCount: videoUrls.length,
+          itemCount: videos.length,
           itemBuilder: (context, index) {
-            return VideoTile(videoUrl: videoUrls[index]);
+            return VideoTile(
+              videoUrl: videos[index]['url']!,
+              videoTitle: videos[index]['title']!,
+            );
           },
         ),
       ),
@@ -52,19 +61,27 @@ class _VideoBlogState extends State<VideoBlog> {
   }
 }
 
-Future<List<String>> fetchVideoUrls() async {
+Future<List<Map<String, String>>> fetchVideoUrlsAndTitles() async {
   await Future.delayed(const Duration(seconds: 4));
 
   return [
-    "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-    "https://www.youtube.com/watch?v=MJ5HksruKgE",
+    {
+      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
+      "title": "Empowering Women Entrepreneurs in Ghana",
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
+      "title": "The Future of Technology in Africa",
+    },
   ];
 }
 
 class VideoTile extends StatefulWidget {
   final String videoUrl;
+  final String videoTitle;
 
-  const VideoTile({Key? key, required this.videoUrl}) : super(key: key);
+  const VideoTile({Key? key, required this.videoUrl, required this.videoTitle})
+      : super(key: key);
 
   @override
   _VideoTileState createState() => _VideoTileState();
@@ -84,7 +101,6 @@ class _VideoTileState extends State<VideoTile> {
     _loadVideo(widget.videoUrl);
   }
 
-  
   String? _getYouTubeVideoId(String url) {
     Uri uri = Uri.parse(url);
     if (uri.queryParameters.containsKey('v')) {
@@ -92,11 +108,11 @@ class _VideoTileState extends State<VideoTile> {
     }
     return null;
   }
-  
+
   void _loadVideo(String videoUrl) {
     String? videoId = _getYouTubeVideoId(videoUrl);
     if (videoId != null) {
-      _controller.loadVideoById(videoId: videoId);
+      _controller.cueVideoById(videoId: videoId);
     }
   }
 
@@ -119,9 +135,10 @@ class _VideoTileState extends State<VideoTile> {
               aspectRatio: 16 / 9,
             ),
             const SizedBox(height: 8),
-            const Text(
-              "Learn about empowering women entrepreneurs in Ghana.",
-              style: TextStyle(fontSize: 16),
+            // show video title
+            Text(
+              widget.videoTitle, 
+              style: const TextStyle(fontSize: 16),
               textAlign: TextAlign.center,
             ),
           ],
