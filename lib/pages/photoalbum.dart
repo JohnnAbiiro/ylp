@@ -188,9 +188,9 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   void onSwipe(DragEndDetails details) {
-    if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+    if (details.velocity.pixelsPerSecond.dx > 0) {
       previousImage(); // Swipe right to go to previous image
-    } else if (details.primaryVelocity != null && details.primaryVelocity! < 0) {
+    } else if (details.velocity.pixelsPerSecond.dx < 0) {
       nextImage(); // Swipe left to go to next image
     }
   }
@@ -202,22 +202,6 @@ class _FullScreenImageState extends State<FullScreenImage> {
     if (isPlaying) {
       autoScrollImages(); // Start autoplay when isPlaying is true
     }
-  }
-
-  void zoomIn() {
-    setState(() {
-      currentScale += 0.5;
-      transformationController.value = Matrix4.identity()..scale(currentScale);
-    });
-  }
-
-  void zoomOut() {
-    setState(() {
-      if (currentScale > 1.0) {
-        currentScale -= 0.5;
-        transformationController.value = Matrix4.identity()..scale(currentScale);
-      }
-    });
   }
 
   void onDoubleTap() {
@@ -266,9 +250,9 @@ class _FullScreenImageState extends State<FullScreenImage> {
       body: Column(
         children: [
           Expanded(
-            child: /*GestureDetector(
+            child: GestureDetector(
               onDoubleTap: onDoubleTap,
-              onPanEnd: onSwipe,
+              onHorizontalDragEnd: onSwipe,
               onTap: showImageDetails, // Show details on tap
               child: InteractiveViewer(
                 transformationController: transformationController,
@@ -281,39 +265,22 @@ class _FullScreenImageState extends State<FullScreenImage> {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
-            ),*/
-        GestureDetector(
-      onDoubleTap: onDoubleTap,
-        onPanEnd: onSwipe,
-        onPanUpdate: (details) {
-          if (details.delta.dx < 0) {
-            // Swipe left to go to the next image
-            nextImage();
-          } else if (details.delta.dx > 0) {
-            // Swipe right to go to the previous image
-            previousImage();
-          }
-        },
-        onTap: showImageDetails, // Show details on tap
-        child: InteractiveViewer(
-          transformationController: transformationController,
-          panEnabled: true, // Allow panning
-          minScale: 0.5,
-          maxScale: 4.0, // Controls the zoom level
-          child: CachedNetworkImage(
-            imageUrl: widget.imageUrls[currentIndex],
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
-        ),
-      ),
+            ),
           ),
           ControlPanel(
             onNext: nextImage,
             onPrevious: previousImage,
             onTogglePlayPause: togglePlayPause,
-            onZoomIn: zoomIn,
-            onZoomOut: zoomOut,
+            onZoomIn: () => setState(() {
+              currentScale += 0.5;
+              transformationController.value = Matrix4.identity()..scale(currentScale);
+            }),
+            onZoomOut: () => setState(() {
+              if (currentScale > 1.0) {
+                currentScale -= 0.5;
+                transformationController.value = Matrix4.identity()..scale(currentScale);
+              }
+            }),
             isPlaying: isPlaying,
           ),
         ],
@@ -343,30 +310,33 @@ class ControlPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      color: const Color(0xFF72024A),
+      padding: const EdgeInsets.all(8.0),
+      color: Colors.black,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: const Icon(Icons.zoom_out, color: Colors.white),
-            onPressed: onZoomOut,
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: onPrevious,
           ),
           IconButton(
-            icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow, color: Colors.white),
+            icon: Icon(
+              isPlaying ? Icons.pause : Icons.play_arrow,
+              color: Colors.white,
+            ),
             onPressed: onTogglePlayPause,
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward, color: Colors.white),
+            onPressed: onNext,
           ),
           IconButton(
             icon: const Icon(Icons.zoom_in, color: Colors.white),
             onPressed: onZoomIn,
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: onPrevious,
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward, color: Colors.white),
-            onPressed: onNext,
+            icon: const Icon(Icons.zoom_out, color: Colors.white),
+            onPressed: onZoomOut,
           ),
         ],
       ),
