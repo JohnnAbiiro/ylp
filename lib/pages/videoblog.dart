@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ylp/provider/controller.dart';
+import 'package:ylp/shimmer.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../constants/containerconstants.dart';
 
@@ -35,31 +38,65 @@ class _VideoBlogState extends State<VideoBlog> {
   @override
   Widget build(BuildContext context) {
     // Desired width for each tile
-    const double tileWidth = 200.0;
-    final int crossAxisCount = (MediaQuery.of(context).size.width / tileWidth).floor();
+    const double itemWidth = 400.0;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    int crossAxisCount = (screenWidth / itemWidth).floor();
+    if (screenWidth <= 400) {
+      crossAxisCount = 2;
+    }
+    else if (screenWidth <= 600 && screenWidth<800) {
+      crossAxisCount = (screenWidth / 300).floor();
+    }
+    else if(screenWidth >=600 && screenWidth<1000)
+    {
+      crossAxisCount = (screenWidth / 300).floor();
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: videos.isEmpty
-            ? const Center(child: CircularProgressIndicator())
-            : GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount:crossAxisCount,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 16 / 9,
+    }
+
+    return Consumer<AppProvider>(
+      builder: (BuildContext context, AppProvider value, Widget? child) {
+        return  Scaffold(
+          backgroundColor: Colors.white,
+          body: Padding(
+            padding: const EdgeInsets.all(10),
+            child: videos.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : FutureBuilder(
+                future: value.videos(),
+                  builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  print(snapshot.data);
+                  if(!snapshot.hasData){
+                    return Text("No data");
+                  }
+                  if(snapshot.hasError)
+                    {
+                      return Text("Error${snapshot.error}");
+                    }
+                  if(snapshot.connectionState==ConnectionState.waiting){
+                    return Text("Please wait...");
+                  }
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount:crossAxisCount,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 16 / 9,
+                    ),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      final data =snapshot.data[index];
+                      return VideoTile(
+                        videoUrl: data['resourceURL']!,
+                        videoTitle: data['title']!,
+                      );
+                    },
+                  );
+                  },
+
+                ),
           ),
-          itemCount: videos.length,
-          itemBuilder: (context, index) {
-            return VideoTile(
-              videoUrl: videos[index]['url']!,
-              videoTitle: videos[index]['title']!,
-            );
-          },
-        ),
-      ),
+        );
+      },
     );
   }
 }

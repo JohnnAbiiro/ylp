@@ -154,7 +154,7 @@ class LandingPage extends StatelessWidget {
                       FutureBuilder(
                         future:value.recent_articles(),
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                          print(snapshot.data);
+                          //print(snapshot.data);
                           return ListView.builder(
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),

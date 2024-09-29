@@ -173,6 +173,45 @@ class AppProvider extends ChangeNotifier{
        return [{"Error": "Exception: $e"}];
      }
    }
+   Future<List<dynamic>?> videos({int retryCount = 0}) async {
+     const int maxRetries = 5;
+     const int backoffFactor = 2;
+
+     try {
+       var url = Uri.parse("https://portal.ylpghanaapp.com/api/v1/lmsvideos");
+       var response = await http.get(
+         url,
+         headers: {
+           'Authorization': 'Bearer 6|DyMM7tTXwU72lpMixtM3xXOVxYKLGx1KUMGCGvdg',
+         },
+       );
+
+       if (response.statusCode == 200) {
+         var data = jsonDecode(response.body)['data'];
+         if (data is List) {
+           return data;
+         } else {
+           return [];
+         }
+       } else if (response.statusCode == 429) {
+         final retryAfter = response.headers['retry-after'];
+         final retryAfterDuration = retryAfter != null
+             ? Duration(seconds: int.parse(retryAfter))
+             : Duration(seconds: backoffFactor * retryCount);
+
+         if (retryCount < maxRetries) {
+           await Future.delayed(retryAfterDuration);
+           return await articles_category(retryCount: retryCount + 1);
+         } else {
+           return [{"Error": "Rate limit exceeded. Max retries reached."}];
+         }
+       } else {
+         return [{"Error": "Bad Response ${response.statusCode}"}];
+       }
+     } catch (e) {
+       return [{"Error": "Exception: $e"}];
+     }
+   }
 
   Future<List<dynamic>?> constituencydata()async{
     try{
