@@ -70,7 +70,7 @@ Future<List<Map<String, String>>> fetchVideoUrlsAndTitles() async {
   return [
     {
       "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-      "title": "Empowering Women Entrepreneurs in Ghana",
+      "title": "Empowering Women Entrepreneurs in Ghana Empowering Women Entrepreneurs in Ghana Empowering Women Entrepreneurs in Ghana",
     },
     {
       "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
@@ -143,46 +143,60 @@ class _VideoTileState extends State<VideoTile> {
 
   @override
   Widget build(BuildContext context) {
-        final double Textsize = MediaQuery.of(context).size.width < 400 ? 12 : 14;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double screenWidth = constraints.maxWidth;
+        final double textSize = screenWidth < 400 ? 12 : 14;
 
-    return Container(
-      margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Wrap(
-          children: [
-            YoutubePlayer(
-              controller: _controller,
-              aspectRatio: 16 / 9,
-            ),
-            // show video title
-            Container(
-              decoration: BoxDecoration(
-                  color: ContainerConstants.dropdownColor1,
-
-                  borderRadius:BorderRadius.only(
-                    bottomLeft: Radius.circular(5),
-                    bottomRight: Radius.circular(5),
-                  )
-              ),
-              child:
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  widget.videoTitle,
-                  style: TextStyle(fontSize: Textsize,color: Colors.white),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
+        return Container(
+          margin: const EdgeInsets.all(10),
+          child: Flex(
+            direction: Axis.vertical,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Video player with flex behavior
+              Expanded(
+                flex: 3,
+                child: AspectRatio(
+                  aspectRatio: screenWidth > 600 ? 16 / 9 : 4 / 3,
+                  child: YoutubePlayer(
+                    controller: _controller,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-
-          ],
-        ),
-      ),
+              Container(
+                decoration: BoxDecoration(
+                  color: ContainerConstants.loginContainer,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5),
+                  ),
+                ),
+                padding: const EdgeInsets.all(8.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.videoTitle,
+                        style: TextStyle(
+                          fontSize: textSize,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
+
 }
