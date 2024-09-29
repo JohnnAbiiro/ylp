@@ -3,6 +3,7 @@ import 'package:ylp/pages/Signup.dart';
 import 'package:ylp/pages/articles_category.dart';
 import 'package:ylp/pages/constituency.dart';
 import 'package:ylp/pages/createaccount.dart';
+import 'package:ylp/pages/gallery.dart';
 import 'package:ylp/pages/htmltest.dart';
 import 'package:ylp/pages/membership.dart';
 import 'package:ylp/pages/regions.dart';

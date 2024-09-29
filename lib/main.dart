@@ -39,7 +39,7 @@ void main() async{
   // var sha256Hash = sha256.convert(bytes);
   // print("SHA-256: $sha256Hash");
   runApp(ChangeNotifierProvider(create: (BuildContext context)=>AppProvider(),
-  child: const MyApp()));
+  child:  MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -153,15 +153,22 @@ class _MyHomePageState extends State<MyHomePage> {
                           );
                         },
                       ),
-                      // ListTile(
-                      //   leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
-                      //   title: const Text('Organizations',
-                      //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                      //   onTap: () {
-                      //     Navigator.push(context,MaterialPageRoute(builder: (context)=>const Detailbutton()),
-                      //     );
-                      //   },
-                      // ),
+                      ListTile(
+                        leading: const Icon(Icons.photo, color: ConstantsIcon.iconWhite),
+                        title: const Text('Gallery',
+                            style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.photo);
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.video_camera_front, color: ConstantsIcon.iconWhite),
+                        title: const Text('Videos',
+                            style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.videoblog);
+                        },
+                      ),
                       ListTile(
                         leading: const Icon(Icons.bar_chart, color: ConstantsIcon.iconWhite),
                         title: const Text('Youth Opinion Polls',
