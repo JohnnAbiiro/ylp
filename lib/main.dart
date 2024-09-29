@@ -269,17 +269,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         ),
                       ),
-                      // ListTile(
-                      //   leading: const Icon(Icons.person_add, color: ConstantsIcon.iconWhite),
-                      //   title: const Text('Sign up',
-                      //       style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(builder: (context) => const Signup()),
-                      //     );
-                      //   },
-                      // ),
+                      ListTile(
+                        leading: const Icon(Icons.person_add, color: ConstantsIcon.iconWhite),
+                        title: const Text('Photo',
+                            style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
+                        onTap: () {
+                         Navigator.pushNamed(context, Routes.photo) ;
+                        },
+                      ),
                     ],
                   ),
                 ),

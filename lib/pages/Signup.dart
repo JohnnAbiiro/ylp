@@ -302,6 +302,7 @@ class _SignupState extends State<Signup> {
                                       text: '.',
                                       style: TextStyle(fontSize: 12.0),
                                     ),
+
                                   ],
                                 ),
                               )
