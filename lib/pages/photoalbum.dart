@@ -259,23 +259,23 @@ class ControlPanel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           IconButton(
-            icon: const Icon(Icons.zoom_out, color: Colors.black),
+            icon: const Icon(Icons.zoom_out, color: Colors.white),
             onPressed: onZoomOut,
           ),
           IconButton(
-            icon: const Icon(Icons.play_arrow, color: Colors.black),
+            icon: const Icon(Icons.play_arrow, color: Colors.white),
             onPressed: onTogglePlayPause,
           ),
           IconButton(
-            icon: const Icon(Icons.zoom_in, color: Colors.black),
+            icon: const Icon(Icons.zoom_in, color: Colors.white),
             onPressed: onZoomIn,
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: onPrevious,
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_forward, color: Colors.black),
+            icon: const Icon(Icons.arrow_forward, color: Colors.white),
             onPressed: onNext,
           ),
         ],
