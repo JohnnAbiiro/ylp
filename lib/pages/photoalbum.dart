@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -9,6 +8,8 @@ class PhotoAlbum extends StatefulWidget {
 
 class _PhotoAlbumState extends State<PhotoAlbum> {
   List<String> imageUrls = [];
+  List<String> titles = [];
+  List<String> descriptions = [];
 
   @override
   void initState() {
@@ -27,6 +28,24 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
         'https://ylpghana.com/wp-content/uploads/2022/10/760.jpg',
         'https://ylpghana.com/wp-content/uploads/2022/10/49.jpg',
         'https://ylpghana.com/wp-content/uploads/2022/10/154.jpg',
+      ];
+      titles = [
+        'Image 1',
+        'Image 2',
+        'Image 3',
+        'Image 4',
+        'Image 5',
+        'Image 6',
+        'Image 7',
+      ];
+      descriptions = [
+        'Description for Image 1',
+        'Description for Image 2',
+        'Description for Image 3',
+        'Description for Image 4',
+        'Description for Image 5',
+        'Description for Image 6',
+        'Description for Image 7',
       ];
     });
   }
@@ -56,7 +75,13 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => FullScreenImage(imageUrls: imageUrls, initialIndex: index),
+                    builder: (context) => FullScreenImage(
+                      imageUrls: imageUrls,
+                      initialIndex: index,
+                      isPlaying: false,
+                      title: titles[index],
+                      description: descriptions[index],
+                    ),
                   ),
                 );
               },
@@ -77,11 +102,11 @@ class ImageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(5),
       ),
       elevation: 5,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(5),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
           fit: BoxFit.cover,
@@ -98,7 +123,18 @@ class ImageCard extends StatelessWidget {
 class FullScreenImage extends StatefulWidget {
   final List<String> imageUrls;
   final int initialIndex;
-  const FullScreenImage({super.key, required this.imageUrls, required this.initialIndex});
+  final bool isPlaying;
+  final String title;
+  final String description;
+
+  const FullScreenImage({
+    super.key,
+    required this.imageUrls,
+    required this.isPlaying,
+    required this.initialIndex,
+    required this.title,
+    required this.description,
+  });
 
   @override
   _FullScreenImageState createState() => _FullScreenImageState();
@@ -121,19 +157,16 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   void autoScrollImages() {
-    Future.delayed(const Duration(seconds: 3), () {
-      if (isPlaying) {
-        if (currentIndex < widget.imageUrls.length - 1) {
-          nextImage();
-        } else {
-          setState(() {
-            currentIndex = 0; // Reset to first image when reaching the end
-            transformationController.value = Matrix4.identity(); // Reset zoom
-          });
-        }
-        autoScrollImages(); // Keep scrolling
-      }
-    });
+    if (isPlaying) {
+      Future.delayed(const Duration(seconds: 3), () {
+        if (!isPlaying) return; // Stop autoplay if isPlaying is false
+        setState(() {
+          currentIndex = (currentIndex + 1) % widget.imageUrls.length; // Loop back to the first image
+          transformationController.value = Matrix4.identity(); // Reset zoom on each change
+        });
+        autoScrollImages(); // Recursive call to keep the slideshow playing
+      });
+    }
   }
 
   void nextImage() {
@@ -155,44 +188,56 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   void onSwipe(DragEndDetails details) {
-    if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
-      previousImage();  // Swipe right to go to previous image
-    } else if (details.primaryVelocity != null && details.primaryVelocity! < 0) {
-      nextImage();  // Swipe left to go to next image
+    if (details.velocity.pixelsPerSecond.dx > 0) {
+      previousImage(); // Swipe right to go to previous image
+    } else if (details.velocity.pixelsPerSecond.dx < 0) {
+      nextImage(); // Swipe left to go to next image
     }
   }
 
   void togglePlayPause() {
     setState(() {
-      isPlaying = !isPlaying;
+      isPlaying = !isPlaying; // Toggle between playing and pausing
     });
-  }
-
-  void zoomIn() {
-    setState(() {
-      currentScale += 0.5;
-      transformationController.value = Matrix4.identity()..scale(currentScale);
-    });
-  }
-
-  void zoomOut() {
-    setState(() {
-      if (currentScale > 1.0) {
-        currentScale -= 0.5;
-        transformationController.value = Matrix4.identity()..scale(currentScale);
-      }
-    });
+    if (isPlaying) {
+      autoScrollImages(); // Start autoplay when isPlaying is true
+    }
   }
 
   void onDoubleTap() {
     setState(() {
       if (currentScale == 1.0) {
-        currentScale = 2.0;  // Zoom in
+        currentScale = 2.0; // Zoom in
       } else {
-        currentScale = 1.0;  // Reset zoom
+        currentScale = 1.0; // Reset zoom
       }
       transformationController.value = Matrix4.identity()..scale(currentScale);
     });
+  }
+
+  void showImageDetails() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.title,
+                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                widget.description,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -207,7 +252,8 @@ class _FullScreenImageState extends State<FullScreenImage> {
           Expanded(
             child: GestureDetector(
               onDoubleTap: onDoubleTap,
-              onPanEnd: onSwipe,
+              onHorizontalDragEnd: onSwipe,
+              onTap: showImageDetails, // Show details on tap
               child: InteractiveViewer(
                 transformationController: transformationController,
                 panEnabled: true, // Allow panning
@@ -225,8 +271,17 @@ class _FullScreenImageState extends State<FullScreenImage> {
             onNext: nextImage,
             onPrevious: previousImage,
             onTogglePlayPause: togglePlayPause,
-            onZoomIn: zoomIn,
-            onZoomOut: zoomOut,
+            onZoomIn: () => setState(() {
+              currentScale += 0.5;
+              transformationController.value = Matrix4.identity()..scale(currentScale);
+            }),
+            onZoomOut: () => setState(() {
+              if (currentScale > 1.0) {
+                currentScale -= 0.5;
+                transformationController.value = Matrix4.identity()..scale(currentScale);
+              }
+            }),
+            isPlaying: isPlaying,
           ),
         ],
       ),
@@ -240,6 +295,7 @@ class ControlPanel extends StatelessWidget {
   final VoidCallback onTogglePlayPause;
   final VoidCallback onZoomIn;
   final VoidCallback onZoomOut;
+  final bool isPlaying;
 
   const ControlPanel({
     super.key,
@@ -248,35 +304,39 @@ class ControlPanel extends StatelessWidget {
     required this.onTogglePlayPause,
     required this.onZoomIn,
     required this.onZoomOut,
+    required this.isPlaying,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      color: const Color(0xFF72024A),
+      padding: const EdgeInsets.all(8.0),
+      color: Colors.black,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: const Icon(Icons.zoom_out, color: Colors.white),
-            onPressed: onZoomOut,
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: onPrevious,
           ),
           IconButton(
-            icon: const Icon(Icons.play_arrow, color: Colors.white),
+            icon: Icon(
+              isPlaying ? Icons.pause : Icons.play_arrow,
+              color: Colors.white,
+            ),
             onPressed: onTogglePlayPause,
+          ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward, color: Colors.white),
+            onPressed: onNext,
           ),
           IconButton(
             icon: const Icon(Icons.zoom_in, color: Colors.white),
             onPressed: onZoomIn,
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: onPrevious,
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward, color: Colors.white),
-            onPressed: onNext,
+            icon: const Icon(Icons.zoom_out, color: Colors.white),
+            onPressed: onZoomOut,
           ),
         ],
       ),
