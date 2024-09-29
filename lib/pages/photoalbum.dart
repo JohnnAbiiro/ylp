@@ -32,6 +32,10 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
         'images/6.jpg',
         'images/32.jpg',
         'images/154.jpg',
+        'images/97.jpg',
+        'images/49.jpg',
+        'images/760.jpg',
+        'images/623.jpg',
       ];
     });
   }
