@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       ListTile(
                         leading: const Icon(Icons.photo, color: ConstantsIcon.iconWhite),
-                        title: const Text('Gallery',
+                        title: const Text('Gallerys',
                             style: TextStyle(color: ConstantsTextColor.logintext, fontSize: 12.0)),
                         onTap: () {
                           Navigator.pushNamed(context, Routes.photo);

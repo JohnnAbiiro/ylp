@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ylp/provider/controller.dart';
-import 'package:ylp/shimmer.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../constants/containerconstants.dart';
+import '../provider/routes.dart';
 
 class VideoBlog extends StatefulWidget {
   const VideoBlog({super.key});
@@ -56,11 +56,18 @@ class _VideoBlogState extends State<VideoBlog> {
     return Consumer<AppProvider>(
       builder: (BuildContext context, AppProvider value, Widget? child) {
         return  Scaffold(
+          appBar: AppBar(
+            leading: InkWell(onTap:(){
+              Navigator.pushNamed(context, Routes.dashboard);
+            },child: const Icon(Icons.arrow_back,color: Colors.white,)),
+            title: const Text('Video Blog', style: TextStyle(color: Colors.white)),
+            backgroundColor: ContainerConstants.appBarColor,
+          ),
           backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.all(10),
             child: videos.isEmpty
-                ? const Center(child: CircularProgressIndicator())
+                ? Center(child: Text("Loading page..."))
                 : FutureBuilder(
                 future: value.videos(),
                   builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -105,30 +112,12 @@ Future<List<Map<String, String>>> fetchVideoUrlsAndTitles() async {
   await Future.delayed(const Duration(seconds: 4));
 
   return [
-    {
-      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-      "title": "Empowering Women Entrepreneurs in Ghana Empowering Women Entrepreneurs in Ghana Empowering Women Entrepreneurs in Ghana",
-    },
+
     {
       "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
       "title": "The Future of Technology in Africa",
     },
-    {
-      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-      "title": "Empowering Women Entrepreneurs in Ghana",
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=fGoFE3DS6sk",
-      "title": "Empowering Women Entrepreneurs in Ghana",
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
-      "title": "The Future of Technology in Africa",
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=MJ5HksruKgE",
-      "title": "The Future of Technology in Africa",
-    },
+
   ];
 }
 
@@ -201,6 +190,7 @@ class _VideoTileState extends State<VideoTile> {
                   ),
                 ),
               ),
+              // Video title below the player
               Container(
                 decoration: BoxDecoration(
                   color: ContainerConstants.loginContainer,
@@ -235,5 +225,6 @@ class _VideoTileState extends State<VideoTile> {
       },
     );
   }
+
 
 }
