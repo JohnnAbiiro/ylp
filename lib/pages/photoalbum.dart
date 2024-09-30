@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
+import '../constants/iconconstants.dart';
 
 class PhotoAlbum extends StatefulWidget {
   @override
@@ -7,9 +10,7 @@ class PhotoAlbum extends StatefulWidget {
 }
 
 class _PhotoAlbumState extends State<PhotoAlbum> {
-  List<String> imageUrls = [];
-  List<String> titles = [];
-  List<String> descriptions = [];
+  List<ImageDetail> images = [];
 
   @override
   void initState() {
@@ -20,32 +21,42 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
   Future<void> fetchImages() async {
     await Future.delayed(Duration(seconds: 2));
     setState(() {
-      imageUrls = [
-        'https://ylpghana.com/wp-content/uploads/2022/10/Untitled-1.jpg',
-        'https://ylpghana.com/wp-content/uploads/2022/10/202.jpg',
-        'https://ylpghana.com/wp-content/uploads/2022/10/97.jpg',
-        'https://ylpghana.com/wp-content/uploads/2022/10/ttrrr.jpg',
-        'https://ylpghana.com/wp-content/uploads/2022/10/760.jpg',
-        'https://ylpghana.com/wp-content/uploads/2022/10/49.jpg',
-        'https://ylpghana.com/wp-content/uploads/2022/10/154.jpg',
-      ];
-      titles = [
-        'Image 1',
-        'Image 2',
-        'Image 3',
-        'Image 4',
-        'Image 5',
-        'Image 6',
-        'Image 7',
-      ];
-      descriptions = [
-        'Description for Image 1',
-        'Description for Image 2',
-        'Description for Image 3',
-        'Description for Image 4',
-        'Description for Image 5',
-        'Description for Image 6',
-        'Description for Image 7',
+      images = [
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/Untitled-1.jpg',
+          title: 'Image 1',
+          description: 'Description for Image 1',
+        ),
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/202.jpg',
+          title: 'Image 2',
+          description: 'Description for Image 2',
+        ),
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/97.jpg',
+          title: 'Image 3',
+          description: 'Description for Image 3',
+        ),
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/ttrrr.jpg',
+          title: 'Image 4',
+          description: 'Description for Image 4',
+        ),
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/760.jpg',
+          title: 'Image 5',
+          description: 'Description for Image 5',
+        ),
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/49.jpg',
+          title: 'Image 6',
+          description: 'Description for Image 6',
+        ),
+        ImageDetail(
+          imageUrl: 'https://ylpghana.com/wp-content/uploads/2022/10/154.jpg',
+          title: 'Image 7',
+          description: 'Description for Image 7',
+        ),
       ];
     });
   }
@@ -56,10 +67,11 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
       appBar: AppBar(
         title: const Text('Photo Album', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF72024A),
+        iconTheme: const IconThemeData(color: ConstantsIcon.iconWhite),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: imageUrls.isEmpty
+        child: images.isEmpty
             ? const Center(child: CircularProgressIndicator())
             : GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -68,7 +80,7 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
             mainAxisSpacing: 10,
             childAspectRatio: 1,
           ),
-          itemCount: imageUrls.length,
+          itemCount: images.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -76,16 +88,13 @@ class _PhotoAlbumState extends State<PhotoAlbum> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => FullScreenImage(
-                      imageUrls: imageUrls,
+                      images: images,
                       initialIndex: index,
-                      isPlaying: false,
-                      title: titles[index],
-                      description: descriptions[index],
                     ),
                   ),
                 );
               },
-              child: ImageCard(imageUrl: imageUrls[index]),
+              child: ImageCard(imageUrl: images[index].imageUrl),
             );
           },
         ),
@@ -121,19 +130,13 @@ class ImageCard extends StatelessWidget {
 }
 
 class FullScreenImage extends StatefulWidget {
-  final List<String> imageUrls;
+  final List<ImageDetail> images;
   final int initialIndex;
-  final bool isPlaying;
-  final String title;
-  final String description;
 
   const FullScreenImage({
     super.key,
-    required this.imageUrls,
-    required this.isPlaying,
+    required this.images,
     required this.initialIndex,
-    required this.title,
-    required this.description,
   });
 
   @override
@@ -153,7 +156,6 @@ class _FullScreenImageState extends State<FullScreenImage> {
     isPlaying = false;
     currentScale = 1.0;
     transformationController = TransformationController();
-    autoScrollImages();
   }
 
   void autoScrollImages() {
@@ -161,7 +163,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
       Future.delayed(const Duration(seconds: 3), () {
         if (!isPlaying) return; // Stop autoplay if isPlaying is false
         setState(() {
-          currentIndex = (currentIndex + 1) % widget.imageUrls.length; // Loop back to the first image
+          currentIndex = (currentIndex + 1) % widget.images.length; // Loop back to the first image
           transformationController.value = Matrix4.identity(); // Reset zoom on each change
         });
         autoScrollImages(); // Recursive call to keep the slideshow playing
@@ -170,7 +172,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
   }
 
   void nextImage() {
-    if (currentIndex < widget.imageUrls.length - 1) {
+    if (currentIndex < widget.images.length - 1) {
       setState(() {
         currentIndex++;
         transformationController.value = Matrix4.identity(); // Reset zoom
@@ -225,13 +227,13 @@ class _FullScreenImageState extends State<FullScreenImage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                widget.title,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                widget.images[currentIndex].title,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
-                widget.description,
-                style: const TextStyle(fontSize: 16),
+                widget.images[currentIndex].description,
+                style: const TextStyle(fontSize: 14),
               ),
             ],
           ),
@@ -246,6 +248,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF72024A),
         title: const Text('Photo', style: TextStyle(color: Colors.white)),
+        iconTheme: const IconThemeData(color: ConstantsIcon.iconWhite),
       ),
       body: Column(
         children: [
@@ -256,11 +259,11 @@ class _FullScreenImageState extends State<FullScreenImage> {
               onTap: showImageDetails, // Show details on tap
               child: InteractiveViewer(
                 transformationController: transformationController,
-                panEnabled: true, // Allow panning
+                panEnabled: true,
                 minScale: 0.5,
-                maxScale: 4.0, // Controls the zoom level
+                maxScale: 4.0,
                 child: CachedNetworkImage(
-                  imageUrl: widget.imageUrls[currentIndex],
+                  imageUrl: widget.images[currentIndex].imageUrl,
                   placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
@@ -327,10 +330,6 @@ class ControlPanel extends StatelessWidget {
             onPressed: onTogglePlayPause,
           ),
           IconButton(
-            icon: const Icon(Icons.arrow_forward, color: Colors.white),
-            onPressed: onNext,
-          ),
-          IconButton(
             icon: const Icon(Icons.zoom_in, color: Colors.white),
             onPressed: onZoomIn,
           ),
@@ -338,8 +337,25 @@ class ControlPanel extends StatelessWidget {
             icon: const Icon(Icons.zoom_out, color: Colors.white),
             onPressed: onZoomOut,
           ),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward, color: Colors.white),
+            onPressed: onNext,
+          ),
         ],
       ),
     );
   }
 }
+
+class ImageDetail {
+  final String imageUrl;
+  final String title;
+  final String description;
+
+  ImageDetail({
+    required this.imageUrl,
+    required this.title,
+    required this.description,
+  });
+}
+
